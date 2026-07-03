@@ -2091,3 +2091,361 @@
         });
     </script>
 </body></html>
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Flow Copilot - Galaxy Operational Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Serif:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --bio-lime: #d6f34c; /* Derived from shared component style_primary_color dark:text-bio-lime */
+            --cobalt-electric: #2e5bff;
+        }
+
+        body {
+            background-color: #0e141a;
+            color: #dde3eb;
+            overflow-x: hidden;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .glass-panel {
+            background: rgba(10, 10, 31, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("https://www.transparenttextures.com/patterns/stardust.png");
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .rim-light-lime {
+            border-top: 1px solid rgba(214, 243, 76, 0.3);
+            border-left: 1px solid rgba(214, 243, 76, 0.3);
+        }
+
+        .nebula-glow {
+            box-shadow: 0 0 40px rgba(214, 243, 76, 0.1);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .orb-connection {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, rgba(214, 243, 76, 0.2), transparent);
+            height: 1px;
+            z-index: 0;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Custom Scrollbar for Chat */
+        .chat-scroll::-webkit-scrollbar { width: 4px; }
+        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: rgba(214, 243, 76, 0.2); border-radius: 10px; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#2f353c",
+                        "error-container": "#93000a",
+                        "on-surface-variant": "#cbc3d7",
+                        "on-surface": "#dde3eb",
+                        "tertiary-fixed-dim": "#eec200",
+                        "primary": "#d0bcff",
+                        "on-secondary-fixed-variant": "#005047",
+                        "tertiary-container": "#cea700",
+                        "on-primary": "#3c0091",
+                        "surface-tint": "#d0bcff",
+                        "surface-bright": "#333a40",
+                        "primary-fixed-dim": "#d0bcff",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#0e141a",
+                        "surface": "#0e141a",
+                        "inverse-surface": "#dde3eb",
+                        "surface-container": "#1a2026",
+                        "secondary-fixed": "#62fae3",
+                        "on-tertiary": "#3c2f00",
+                        "secondary-fixed-dim": "#3cddc7",
+                        "primary-container": "#a078ff",
+                        "on-tertiary-container": "#4e3e00",
+                        "on-background": "#dde3eb",
+                        "surface-container-lowest": "#080f14",
+                        "on-secondary-fixed": "#00201c",
+                        "outline": "#958ea0",
+                        "on-tertiary-fixed-variant": "#574500",
+                        "on-primary-container": "#340080",
+                        "on-tertiary-fixed": "#231b00",
+                        "inverse-primary": "#6d3bd7",
+                        "inverse-on-surface": "#2b3137",
+                        "secondary-container": "#03c6b2",
+                        "surface-container-highest": "#2f353c",
+                        "on-primary-fixed-variant": "#5516be",
+                        "surface-container-high": "#242b31",
+                        "secondary": "#44e2cd",
+                        "background": "#0e141a",
+                        "primary-fixed": "#e9ddff",
+                        "outline-variant": "#494454",
+                        "on-primary-fixed": "#23005c",
+                        "on-secondary-container": "#004d44",
+                        "surface-container-low": "#161c22",
+                        "on-secondary": "#003731",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#ffe083",
+                        "tertiary": "#eec200",
+                        "error": "#ffb4ab",
+                        "bio-lime": "#d6f34c",
+                        "cobalt-electric": "#2e5bff",
+                        "obsidian": "#080f14"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "node-gap": "2rem",
+                        "panel-padding": "1.25rem",
+                        "orbital-outer": "4rem",
+                        "orbital-inner": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg": ["Noto Serif"],
+                        "headline-lg-mobile": ["Noto Serif"],
+                        "body-md": ["JetBrains Mono"],
+                        "display-lg": ["Noto Serif"],
+                        "data-lg": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["11px", {"lineHeight": "1", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "data-lg": ["18px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface overflow-hidden h-screen flex flex-col">
+<!-- Starry Background Animation Layer -->
+<div class="fixed inset-0 pointer-events-none z-0" id="star-field"></div>
+<!-- Top AppBar (from Shared Components) -->
+<header class="bg-surface/40 backdrop-blur-xl border-b border-white/5 fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-cobalt-electric dark:text-bio-lime">hub</span>
+<h1 class="font-display-lg text-headline-lg-mobile tracking-widest text-cobalt-electric dark:text-bio-lime drop-shadow-[0_0_8px_rgba(46,91,255,0.8)]">FLOW</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end hidden sm:flex">
+<span class="font-label-sm text-label-sm text-bio-lime">EN | BM</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-bio-lime/30 p-0.5 overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="A highly detailed, cinematic close-up of a human user profile avatar rendered in a bioluminescent, futuristic style. The face is partially obscured by holographic light patterns in cobalt blue and neon lime. The background is a dark, deep-space void with soft ambient blurs of stardust. The lighting is ethereal and sharp, highlighting high-tech glass-like skin textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeakuMIMAi5mITxCaLMbIdc47Ea_1V3eJHsRuBIEIdfYIC2YlSpH6-6imWXYaU-GPlFUUMoMw5kNZx6WkoIk27ZAZ3p9J2Bum7EkimfBXfBbVVKzOfk6DkjEogAt6b249Pi8jDe3tHNQrCKgkyqAEZSIS9_tI53IUhAz4DXNUT2xGcx8LvDJdlfJ67sswvQMRfw8O4E7jVIvXECUPp6D3xGtyQb6JIo54FF5TKQlpw6j-bCPB-zx_DCc0JU9vV7SnOprruZQxBIRgC"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-20 mb-24 px-4 overflow-y-auto chat-scroll relative z-10">
+<!-- System HUD Summary / Pulse Insights -->
+<section class="grid grid-cols-1 gap-4 mb-8">
+<div class="glass-panel rim-light-lime rounded-xl p-4 nebula-glow">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h2 class="font-label-sm text-label-sm text-bio-lime uppercase tracking-widest">Team Pulse / Denyut Pasukan</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">System Status: Optimal</p>
+</div>
+<div class="flex items-center gap-2 px-2 py-1 bg-error-container/20 border border-error/40 rounded-full">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-label-sm text-[10px] text-error font-bold uppercase">Rescue Mode Active</span>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-around border-t border-white/5 pt-4">
+<div class="text-center">
+<span class="font-data-lg text-data-lg text-bio-lime">84%</span>
+<p class="font-label-sm text-[9px] text-on-surface-variant uppercase">Efficiency</p>
+</div>
+<div class="w-px h-8 bg-white/10"></div>
+<div class="text-center">
+<span class="font-data-lg text-data-lg text-bio-lime">12</span>
+<p class="font-label-sm text-[9px] text-on-surface-variant uppercase">Active Rooms</p>
+</div>
+<div class="w-px h-8 bg-white/10"></div>
+<div class="text-center">
+<span class="font-data-lg text-data-lg text-error">2</span>
+<p class="font-label-sm text-[9px] text-on-surface-variant uppercase">Alerts</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Chat Interaction Area -->
+<div class="space-y-6 pb-4">
+<!-- AI Message -->
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-bio-lime text-sm">smart_toy</span>
+<span class="font-label-sm text-label-sm text-bio-lime uppercase">Flow Copilot</span>
+</div>
+<div class="glass-panel rim-light-lime p-4 rounded-tr-2xl rounded-br-2xl rounded-bl-2xl"><p class="font-body-md text-body-md leading-relaxed">
+                        Greetings, Commander. I have analyzed the current work-items. There is an anomaly in <span class="text-bio-lime">Sector 7G (Room: Nebula-Alpha)</span>. 
+                        <br/><br/>
+<span class="text-bio-lime font-bold">[STATUS UPDATE / KEMAS KINI STATUS]</span><br/>
+                        Sila ambil perhatian: Kecekapan pasukan menurun sebanyak 4% dalam tempoh satu jam terakhir. 
+                    </p>
+<div class="mt-4 pt-4 border-t border-white/10">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase block mb-2 italic">Evidence-Grounded Sources / Sumber Berasaskan Bukti:</span>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface-container-high/60 backdrop-blur-md border border-white/10 rounded text-[10px] font-label-sm flex items-center gap-1 hover:bg-bio-lime/20 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[12px]">description</span> Log_7G_Alpha.json
+                            </span>
+<span class="px-2 py-1 bg-surface-container-high/60 backdrop-blur-md border border-white/10 rounded text-[10px] font-label-sm flex items-center gap-1 hover:bg-bio-lime/20 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[12px]">analytics</span> Pulse_Metrics_v4
+                            </span>
+</div>
+</div></div>
+</div>
+<!-- User Message -->
+<div class="flex flex-col items-end ml-auto max-w-[85%]">
+<div class="glass-panel border-cobalt-electric/30 p-4 rounded-tl-2xl rounded-bl-2xl rounded-br-2xl">
+<p class="font-body-md text-body-md">
+                        Summarize the work-items in Nebula-Alpha. Berikan ringkasan tugas.
+                    </p>
+</div>
+<span class="mt-1 font-label-sm text-[10px] text-on-surface-variant uppercase">User • 09:41</span>
+</div>
+<!-- AI Response with Evidence Card -->
+<div class="flex flex-col items-start max-w-[90%]">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-bio-lime text-sm">smart_toy</span>
+<span class="font-label-sm text-label-sm text-bio-lime uppercase">Flow Copilot</span>
+</div>
+<div class="glass-panel rim-light-lime p-4 rounded-tr-2xl rounded-br-2xl rounded-bl-2xl nebula-glow"><p class="font-body-md text-body-md mb-4">Here is the summary for <strong class="text-bio-lime">Nebula-Alpha</strong> / Ringkasan untuk Nebula-Alpha:</p>
+<div class="space-y-3">
+<!-- Summary Item 1 -->
+<div class="flex items-center gap-3 p-3 bg-surface-container-lowest/30 backdrop-blur-sm border border-white/10 rounded-lg hover:border-bio-lime/40 transition-colors">
+<div class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(238,194,0,0.6)]"></div>
+<div class="flex-1">
+<h4 class="font-label-sm text-label-sm text-on-surface">Data Stream Calibration / Kalibrasi Aliran Data</h4>
+<p class="text-[10px] text-on-surface-variant">Pending / Tertunda - Assigned to Sgt. Nova</p>
+</div>
+</div>
+<!-- Summary Item 2 -->
+<div class="flex items-center gap-3 p-3 bg-surface-container-lowest/30 backdrop-blur-sm border border-white/10 rounded-lg hover:border-bio-lime/40 transition-colors">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(68,226,205,0.6)]"></div>
+<div class="flex-1">
+<h4 class="font-label-sm text-label-sm text-on-surface">Oxygen Scrubbers Maintenance / Penyelenggaraan Pembersih Oksigen</h4>
+<p class="text-[10px] text-on-surface-variant">In Progress / Sedang Berjalan - 45% Complete</p>
+</div>
+</div>
+</div>
+<div class="mt-4 flex gap-2">
+<button class="px-3 py-1.5 glass-panel border-bio-lime/40 text-[10px] font-bold text-bio-lime uppercase rounded-full hover:bg-bio-lime/20 transition-all active:scale-95">
+                            Engage Rescue Mode / Aktifkan Mod Penyelamat
+                        </button>
+<button class="px-3 py-1.5 glass-panel border-on-surface-variant/40 text-[10px] font-bold text-on-surface-variant uppercase rounded-full hover:bg-white/5 transition-all active:scale-95">
+                            Full Report / Laporan Penuh
+                        </button>
+</div></div>
+</div>
+</div>
+</main>
+<!-- Floating Input Bar -->
+<div class="fixed bottom-24 left-4 right-4 z-40">
+<div class="glass-panel border-white/10 rounded-full px-5 py-3 flex items-center gap-3 nebula-glow">
+<span class="material-symbols-outlined text-on-surface-variant">language</span>
+<input class="bg-transparent border-none focus:ring-0 flex-1 font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/40" placeholder="Command Flow Copilot... / Arahan Flow Copilot..." type="text"/>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-bio-lime text-obsidian active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar (from Shared Components) -->
+<nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-around gap-4 bg-white/40 dark:bg-obsidian/50 backdrop-blur-lg border border-linen/20 dark:border-white/10 shadow-2xl rounded-full px-8 py-3 min-w-[320px]">
+<!-- Dashboard -->
+<a class="text-on-surface-variant/60 dark:text-outline-variant/50 hover:scale-110 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">space_dashboard</span>
+</a>
+<!-- Copilot (Active) -->
+<a class="text-cobalt-electric dark:text-bio-lime scale-125 drop-shadow-[0_0_12px_rgba(214,243,76,0.6)] animate-pulse" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">diversity_3</span>
+</a>
+<!-- Insights -->
+<a class="text-on-surface-variant/60 dark:text-outline-variant/50 hover:scale-110 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">insights</span>
+</a>
+<!-- Settings -->
+<a class="text-on-surface-variant/60 dark:text-outline-variant/50 hover:scale-110 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">tune</span>
+</a>
+</nav>
+<!-- Micro-Interactions Script -->
+<script>
+        // Generate Star Field
+        const starField = document.getElementById('star-field');
+        const starCount = 60;
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 2 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite ease-in-out`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            starField.appendChild(star);
+        }
+
+        // Simple Chat Scroll to Bottom Logic
+        const chatContainer = document.querySelector('main');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        // Micro-Interactions for Buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => btn.classList.add('scale-95'));
+            btn.addEventListener('mouseup', () => btn.classList.remove('scale-95'));
+        });
+    </script>
+</body></html>
