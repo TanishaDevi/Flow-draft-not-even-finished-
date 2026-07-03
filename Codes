@@ -1,1 +1,413 @@
+<!DOCTYPE html>
 
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Celestial Settlement | FLOW</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Serif:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(10, 10, 31, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(208, 188, 255, 0.3), transparent);
+        }
+        .nebula-glow {
+            box-shadow: 0 0 40px 10px rgba(109, 59, 215, 0.15);
+        }
+        .orbital-line {
+            position: absolute;
+            background: rgba(149, 142, 160, 0.2);
+            z-index: 0;
+        }
+        .pulse-border {
+            animation: borderPulse 3s infinite;
+        }
+        @keyframes borderPulse {
+            0% { border-color: rgba(208, 188, 255, 0.3); }
+            50% { border-color: rgba(208, 188, 255, 0.8); }
+            100% { border-color: rgba(208, 188, 255, 0.3); }
+        }
+        .starlight-dust {
+            background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+            opacity: 0.05;
+            pointer-events: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-low": "#161c22",
+                      "on-primary-fixed": "#23005c",
+                      "inverse-on-surface": "#2b3137",
+                      "outline": "#958ea0",
+                      "on-primary": "#3c0091",
+                      "primary-fixed": "#e9ddff",
+                      "on-surface-variant": "#cbc3d7",
+                      "primary": "#d0bcff",
+                      "surface-container": "#1a2026",
+                      "on-tertiary-fixed-variant": "#574500",
+                      "inverse-surface": "#dde3eb",
+                      "surface": "#0e141a",
+                      "on-tertiary-container": "#4e3e00",
+                      "on-secondary": "#003731",
+                      "on-error-container": "#ffdad6",
+                      "surface-variant": "#2f353c",
+                      "tertiary-fixed-dim": "#eec200",
+                      "secondary-fixed-dim": "#3cddc7",
+                      "on-primary-fixed-variant": "#5516be",
+                      "error-container": "#93000a",
+                      "primary-container": "#a078ff",
+                      "error": "#ffb4ab",
+                      "on-secondary-container": "#004d44",
+                      "secondary-fixed": "#62fae3",
+                      "surface-tint": "#d0bcff",
+                      "inverse-primary": "#6d3bd7",
+                      "on-surface": "#dde3eb",
+                      "secondary-container": "#03c6b2",
+                      "on-secondary-fixed": "#00201c",
+                      "tertiary-fixed": "#ffe083",
+                      "on-secondary-fixed-variant": "#005047",
+                      "on-error": "#690005",
+                      "on-tertiary": "#3c2f00",
+                      "surface-bright": "#333a40",
+                      "tertiary": "#eec200",
+                      "surface-container-lowest": "#080f14",
+                      "on-primary-container": "#340080",
+                      "on-tertiary-fixed": "#231b00",
+                      "tertiary-container": "#cea700",
+                      "primary-fixed-dim": "#d0bcff",
+                      "surface-container-highest": "#2f353c",
+                      "surface-dim": "#0e141a",
+                      "secondary": "#44e2cd",
+                      "outline-variant": "#494454",
+                      "on-background": "#dde3eb",
+                      "surface-container-high": "#242b31",
+                      "background": "#0e141a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "node-gap": "2rem",
+                      "panel-padding": "1.25rem",
+                      "orbital-inner": "1.5rem",
+                      "orbital-outer": "4rem"
+              },
+              "fontFamily": {
+                      "display-lg": ["Noto Serif"],
+                      "headline-lg": ["Noto Serif"],
+                      "body-md": ["JetBrains Mono"],
+                      "label-sm": ["JetBrains Mono"],
+                      "data-lg": ["JetBrains Mono"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-sm": ["11px", {"lineHeight": "1", "fontWeight": "700"}],
+                      "data-lg": ["18px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen selection:bg-primary-container/30 overflow-x-hidden">
+<!-- Orbital Background Lines -->
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="orbital-line h-px w-full top-1/4 left-0"></div>
+<div class="orbital-line h-px w-full top-3/4 left-0"></div>
+<div class="orbital-line w-px h-full left-1/4 top-0"></div>
+<div class="orbital-line w-px h-full left-3/4 top-0"></div>
+</div>
+<!-- Top Navigation -->
+<header class="bg-surface/40 dark:bg-obsidian/60 backdrop-blur-xl border-b border-linen/10 dark:border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] fixed top-0 w-full z-50 flex justify-between items-center px-8 py-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-cobalt-electric dark:text-bio-lime">hub</span>
+<h1 class="font-display-lg text-display-lg tracking-widest text-cobalt-electric dark:text-bio-lime drop-shadow-[0_0_8px_rgba(46,91,255,0.8)]">FLOW</h1>
+</div>
+<div class="hidden md:flex gap-8">
+<button class="font-label-caps text-label-caps text-cobalt-electric dark:text-bio-lime transition-all">GALAXY HUB</button>
+<button class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline-variant hover:text-primary transition-all">TEAM STARS</button>
+<button class="font-label-caps text-label-caps text-on-surface-variant dark:text-outline-variant hover:text-primary transition-all">CONSTELLATIONS</button>
+</div>
+<div class="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A stylized portrait of a high-ranking space commander in a bioluminescent military uniform, glowing with soft neon blues and greens against a deep charcoal background. The aesthetic is sleek, cinematic, and futuristic, with a sharp focus on metallic textures and radiant energy patterns." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDGwG-S5yKzBc3KTCFTi682iNxZRrCCJtCOjmIMx0NoOZnZ3uuTXPqrn_HrveePzivGAkgu59LzO13g0wIpwbbTz7BFNffJDwPMhzeqYI7oP3noGwfrQv77Eoy1S6subqz9c5oEb8jH-wi98i4fYXW2-N1aMJQ4xwvbVZnCzZUiK7bXXa-puxISNmSYTn_6RmdcFkTzwfN6T0XksEUQ6iDGWXed8TQTfIXPSz32JcZVnGd2u42Kq5ENkn0xCRZVHYFZqb1s7Cr0wkb"/>
+</div>
+</header>
+<main class="relative pt-28 pb-20 px-4 md:px-8 max-w-7xl mx-auto z-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Checkout Portal -->
+<div class="lg:col-span-7 space-y-8">
+<section class="glass-panel nebula-glow p-8 rounded-xl relative">
+<div class="starlight-dust absolute inset-0"></div>
+<div class="flex items-center justify-between mb-8">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">Payment Gateway</span>
+<h2 class="font-headline-lg text-headline-lg mt-1">Billplz Sandbox</h2>
+</div>
+<div class="bg-secondary-container/20 px-3 py-1 rounded border border-secondary/30 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="text-xs text-secondary font-bold tracking-tighter">SIMULATION ACTIVE</span>
+</div>
+</div>
+<!-- Simulation Form -->
+<div class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-outline uppercase">Payer Identity</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-b border-outline/30 focus:border-primary px-4 py-3 outline-none font-data-lg text-data-lg text-on-surface transition-all" readonly="" type="text" value="Cmdr. Starlight V"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline/50">verified_user</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-outline uppercase">Interstellar Route</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-b border-outline/30 focus:border-primary px-4 py-3 outline-none font-data-lg text-data-lg text-on-surface transition-all" readonly="" type="text" value="SXP-990-221"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline/50">route</span>
+</div>
+</div>
+</div>
+<!-- Billplz Mock Interaction -->
+<div class="p-6 border border-primary/20 rounded-lg bg-surface-container-lowest/50 backdrop-blur-md">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-2">
+<span class="text-blue-900 font-bold text-xl tracking-tighter">Billplz</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Secure Sandbox Transfer</p>
+<p class="text-xs text-outline">Merchant: CELESTIAL-FLOW-NET</p>
+</div>
+</div>
+<span class="font-data-lg text-data-lg text-primary">RM 4,250.00</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 py-4 bg-primary text-on-primary font-bold rounded hover:bg-primary-container transition-all active:scale-95" id="trigger-success">
+<span class="material-symbols-outlined">check_circle</span>
+                                AUTHORIZE
+                            </button>
+<button class="flex items-center justify-center gap-2 py-4 border border-outline/30 text-on-surface hover:bg-surface-variant font-bold rounded transition-all">
+<span class="material-symbols-outlined">cancel</span>
+                                DECLINE
+                            </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Server-Side Validation Summary -->
+<section class="glass-panel p-6 rounded-xl border-l-4 border-secondary">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-symbols-outlined text-secondary">security</span>
+<h3 class="font-headline-md text-headline-md">Server Validation Log</h3>
+</div>
+<div class="space-y-3 font-label-sm text-label-sm">
+<div class="flex justify-between items-center py-2 border-b border-outline/10">
+<span class="text-outline">Cart Hash Integrity</span>
+<span class="text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-sm">verified</span> MATCHED</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline/10">
+<span class="text-outline">Inventory Reservation ID</span>
+<span class="text-on-surface">RES-8891-XK</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-outline">Callback URL Verification</span>
+<span class="text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-sm">link</span> SECURE</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Order Summary & HUD -->
+<div class="lg:col-span-5 space-y-8">
+<aside class="glass-panel p-8 rounded-xl nebula-glow h-fit sticky top-28">
+<h3 class="font-headline-lg text-headline-lg mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">shopping_cart</span>
+                    Cart Summary
+                </h3>
+<div class="space-y-4 mb-8">
+<div class="flex justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A glowing blue crystalline energy cell, intricately structured with internal geometric facets and humming with power. The background is a dark obsidian space with soft teal light-leaks, emphasizing the ethereal and futuristic nature of the object." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFTK586EKhsHIB6m2Qvl1L7FnMOBN2BfDLG9jS5W_n2v_igz3CscBc0YCJc_Ozrb7oJ47ZogberEIGd_aVPqcmoJuNa5PeCYRO7dUZJkmL6RrHF9hQYu7VfEWHfrJMsoQjXxJVd_NSOt2iTxUUWWZufuDZBsHJjOXerTRh1-Ix7JJ56uqXF9x6dR08CGun-Wd9ZSKLYiHaQN5UDypAvMQO8oG__CeNXW7ocLxy9gQiHGYfFaQ7vqH_1rj5TNUhbXyXF8_o0PSGTsuL"/>
+</div>
+<div>
+<p class="text-on-surface font-bold">Warp Core Crystal</p>
+<p class="text-xs text-outline">x1 Unit</p>
+</div>
+</div>
+<span class="text-primary font-bold">RM 3,000.00</span>
+</div>
+<div class="flex justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="High-tech magnetic suspension modules, sleek silver and chrome surfaces with pulsing violet LED indicators. These components are shown floating slightly in a vacuum chamber, reflecting cold studio lighting that gives them a premium, high-fidelity look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgTPc2EAl7zhv_u6GkmUokvrQNDHSg31NolnSMfwZdIJof1ysixh4PQagiJE1mIZxX8cy0BOVcqc4ek_9DeBduKAaWEvy3ki7efeNCrX_ifMbqCKM8VCtYhR6QqTM_oE1Pxs9yYV11Bw1iYrIIPQxDz5ioNnnOfQn77Gxxoaenkp-d3ajSCZFiX2XAxywFBkJzQ3f47KyU_d_dIZW2RKm1UG2vAArIlzY6AfAy_cT6cBUfbYL9w4ttPPg7Sl6gOgW6HO9MM3p0o_37"/>
+</div>
+<div>
+<p class="text-on-surface font-bold">Anti-Grav Rails</p>
+<p class="text-xs text-outline">x5 Units</p>
+</div>
+</div>
+<span class="text-primary font-bold">RM 1,250.00</span>
+</div>
+</div>
+<div class="border-t border-outline/20 pt-6 space-y-3">
+<div class="flex justify-between text-outline">
+<span>Subtotal</span>
+<span>RM 4,250.00</span>
+</div>
+<div class="flex justify-between text-outline">
+<span>Galactic VAT (0%)</span>
+<span>RM 0.00</span>
+</div>
+<div class="flex justify-between text-2xl font-display-lg text-on-surface mt-4">
+<span>TOTAL</span>
+<span class="text-secondary drop-shadow-[0_0_10px_rgba(68,226,205,0.4)]">RM 4,250.00</span>
+</div>
+</div>
+<!-- HUD Live Stats -->
+<div class="mt-8 grid grid-cols-2 gap-4">
+<div class="p-3 bg-surface-container rounded-lg border border-outline/10">
+<p class="text-[10px] text-outline uppercase tracking-widest">Global Stock</p>
+<p class="text-xl font-bold text-secondary" id="stock-val">2,142</p>
+</div>
+<div class="p-3 bg-surface-container rounded-lg border border-outline/10">
+<p class="text-[10px] text-outline uppercase tracking-widest">Global Revenue</p>
+<p class="text-xl font-bold text-primary" id="rev-val">8.4M</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Success Overlay (Hidden by Default) -->
+<div class="fixed inset-0 z-[100] bg-background/90 backdrop-blur-2xl flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-700" id="success-overlay">
+<div class="max-w-md w-full glass-panel p-10 rounded-2xl text-center space-y-6 relative overflow-visible">
+<div class="absolute -top-16 left-1/2 -translate-x-1/2 w-32 h-32 bg-secondary/20 rounded-full flex items-center justify-center nebula-glow">
+<span class="material-symbols-outlined text-6xl text-secondary animate-bounce">check_circle</span>
+</div>
+<h2 class="font-display-lg text-4xl text-on-surface pt-8">Settlement Verified</h2>
+<p class="text-outline">The Billplz callback was successfully received and validated by our core server. Transaction <strong>#TXN-88122-Z</strong> is now permanent.</p>
+<div class="space-y-2 py-4">
+<div class="flex justify-between items-center text-sm font-label-sm">
+<span class="text-outline">STOCKS UPDATED</span>
+<span class="text-secondary">+1 Crystal, +5 Rails</span>
+</div>
+<div class="w-full h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-full animate-[progress_2s_ease-out]"></div>
+</div>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary font-bold rounded-xl pulse-border border-2" onclick="window.location.reload()">
+                RETURN TO HUB
+            </button>
+</div>
+</div>
+<!-- Navigation Drawer (Shell Component) -->
+<nav class="fixed left-0 top-0 h-screen w-72 bg-oatmeal/30 dark:bg-obsidian/40 backdrop-blur-md flex flex-col p-8 z-40 translate-x-[-100%] transition-transform duration-300 md:translate-x-0 border-r border-outline/10">
+<div class="mb-10">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">admin_panel_settings</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Core Commander</h4>
+<p class="text-xs text-outline">Status: Optimal</p>
+</div>
+</div>
+</div>
+<ul class="space-y-4">
+<li class="flex items-center gap-4 text-on-surface-variant p-2 rounded hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">dashboard_customize</span>
+<span>Galaxy Hub</span>
+</li>
+<li class="flex items-center gap-4 text-on-surface-variant p-2 rounded hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">group_work</span>
+<span>Team Stars</span>
+</li>
+<li class="flex items-center gap-4 text-on-surface-variant p-2 rounded hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">auto_graph</span>
+<span>Constellations</span>
+</li>
+<li class="flex items-center gap-4 text-on-surface-variant p-2 rounded hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span>Nebula Settings</span>
+</li>
+</ul>
+</nav>
+<!-- Bottom Nav (Mobile) -->
+<div class="md:hidden fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] glass-panel rounded-full px-6 py-3 flex justify-around items-center z-50">
+<span class="material-symbols-outlined text-primary scale-125">space_dashboard</span>
+<span class="material-symbols-outlined text-outline-variant">diversity_3</span>
+<span class="material-symbols-outlined text-outline-variant">insights</span>
+<span class="material-symbols-outlined text-outline-variant">tune</span>
+</div>
+<script>
+        const trigger = document.getElementById('trigger-success');
+        const overlay = document.getElementById('success-overlay');
+        const stockVal = document.getElementById('stock-val');
+        const revVal = document.getElementById('rev-val');
+
+        trigger.addEventListener('click', () => {
+            // Mock server-side update delay
+            trigger.disabled = true;
+            trigger.innerHTML = `<span class="material-symbols-outlined animate-spin">refresh</span> VALIDATING...`;
+            
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                
+                // Update global metrics in the background
+                let stock = parseInt(stockVal.innerText.replace(',', ''));
+                let revenue = parseFloat(revVal.innerText.replace('M', ''));
+                
+                stockVal.innerText = (stock - 6).toLocaleString();
+                revVal.innerText = (revenue + 0.04).toFixed(2) + 'M';
+            }, 1500);
+        });
+
+        // Add some floating star effects via JS
+        function createStar() {
+            const star = document.createElement('div');
+            star.className = 'fixed bg-white rounded-full pointer-events-none';
+            const size = Math.random() * 2;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.top = `${Math.random() * 100}vh`;
+            star.style.opacity = Math.random();
+            star.style.zIndex = '0';
+            document.body.appendChild(star);
+
+            setTimeout(() => {
+                star.remove();
+            }, 5000);
+        }
+
+        setInterval(createStar, 200);
+    </script>
+</body></html>
