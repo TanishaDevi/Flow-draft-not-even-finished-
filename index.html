@@ -1448,3 +1448,335 @@
     <a href="payment.html">Payment</a>
   </div>
 </nav>
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Flow Copilot | AI Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@500;600;700&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #FAF9F6 0%, #F2EFE9 50%, #FFD2A0 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .neumorphic-inset {
+            box-shadow: inset 5px 5px 10px rgba(0,0,0,0.05), inset -5px -5px 10px rgba(255,255,255,0.8);
+        }
+
+        .neumorphic-flat {
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.05), -5px -5px 15px rgba(255,255,255,0.8);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .solar-glow {
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: pulse-glow 8s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            from { transform: scale(1); opacity: 0.3; }
+            to { transform: scale(1.2); opacity: 0.5; }
+        }
+
+        .breathing-chip {
+            animation: breathing 3s infinite ease-in-out;
+        }
+
+        @keyframes breathing {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.98); }
+        }
+
+        /* Custom scrollbar for conversational area */
+        .chat-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background: rgba(46, 91, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "linen": "#FAF9F6",
+                    "surface-tint": "#124af0",
+                    "on-background": "#191b24",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed": "#181e00",
+                    "secondary-fixed-dim": "#b7d32c",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f3f2ff",
+                    "background": "#fbf8ff",
+                    "on-primary-fixed-variant": "#0035be",
+                    "surface-bright": "#fbf8ff",
+                    "on-tertiary-container": "#ffece6",
+                    "obsidian": "#1A1B1E",
+                    "on-primary-fixed": "#001356",
+                    "surface-variant": "#e2e1ef",
+                    "on-surface": "#191b24",
+                    "primary-fixed-dim": "#b8c3ff",
+                    "inverse-on-surface": "#f0effd",
+                    "on-secondary-fixed-variant": "#404c00",
+                    "outline-variant": "#c4c5d9",
+                    "secondary-fixed": "#d3f049",
+                    "primary": "#0040e0",
+                    "bio-lime": "#D6F34C",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#b8c3ff",
+                    "on-primary-container": "#efefff",
+                    "cobalt-electric": "#2E5BFF",
+                    "on-tertiary-fixed-variant": "#812800",
+                    "warm-glow": "#FFD2A0",
+                    "on-surface-variant": "#434656",
+                    "outline": "#747688",
+                    "surface": "#fbf8ff",
+                    "tertiary-fixed-dim": "#ffb59b",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#993100",
+                    "secondary-container": "#d3f049",
+                    "surface-container-high": "#e7e7f4",
+                    "tertiary-fixed": "#ffdbcf",
+                    "on-tertiary-fixed": "#380d00",
+                    "surface-container-highest": "#e2e1ef",
+                    "inverse-surface": "#2e303a",
+                    "primary-container": "#2e5bff",
+                    "surface-container": "#ededfa",
+                    "primary-fixed": "#dde1ff",
+                    "secondary": "#566500",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#5b6b00",
+                    "oatmeal": "#F2EFE9",
+                    "surface-dim": "#d9d9e6",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#c24100"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "section-gap": "64px",
+                    "container-padding": "32px",
+                    "margin-page": "48px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["notoSerif"],
+                    "headline-lg": ["notoSerif"],
+                    "display-lg": ["notoSerif"],
+                    "label-caps": ["hankenGrotesk"],
+                    "data-lg": ["jetbrainsMono"],
+                    "headline-md": ["notoSerif"],
+                    "data-sm": ["jetbrainsMono"],
+                    "body-lg": ["hankenGrotesk"],
+                    "body-md": ["hankenGrotesk"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "display-lg": ["56px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                    "data-lg": ["16px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "data-sm": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="overflow-hidden">
+<!-- Solar Atmosphere Decor -->
+<div class="fixed -top-24 -left-24 w-96 h-96 rounded-full bg-warm-glow solar-glow z-0"></div>
+<div class="fixed -bottom-24 -right-24 w-[30rem] h-[30rem] rounded-full bg-cobalt-electric/20 solar-glow z-0"></div>
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-linen/60 dark:bg-obsidian/60 backdrop-blur-xl flex justify-between items-center px-4 py-4 max-w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-cobalt-electric text-3xl" style="font-variation-settings: 'FILL' 1;">bubble_chart</span>
+<h1 class="font-display-lg text-headline-md tracking-tighter text-cobalt-electric dark:text-primary-fixed-dim">Flow</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container shadow-sm overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a technology executive with a warm, empathetic expression. The background is a soft-focus office with warm golden hour lighting and high-end wooden textures. The aesthetic is clean and professional, matching a linen and cobalt color palette with high-contrast clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYsvPFQ5-2UkS4NVgQu4ndxue8hFrM_oP4exvDWRCitEgniCDUC-eu_RXV0ittALzPs_JamdsPUoG4j5fbRXnDTKrIwum3-zsj2Swy5ZkH2pb0R-iy0VP7hpzDkqVY1KlSydBn5i7LqK8o7Ua1C1TLb0DbbVkX8-G4kdy_b2nURUu4OJ77C0YTWpTz1VZpDieCP4Ktba4QRgh0B9cmFIPCzAmKsWS2M7T2IlR038RcJguCBJ2ngqEO8EvzZ5zwSpIv7Lz_bVLlUw8j"/>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full neumorphic-flat bg-linen flex items-center justify-center active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant">history</span>
+</button>
+</div>
+</nav>
+<!-- Main Chat Canvas -->
+<main class="relative z-10 pt-20 pb-32 h-screen flex flex-col px-4">
+<!-- Header / Greeting -->
+<header class="py-6 flex flex-col items-center text-center">
+<div class="w-16 h-16 mb-4 relative flex items-center justify-center">
+<div class="absolute inset-0 bg-cobalt-electric/10 rounded-full animate-ping"></div>
+<div class="absolute inset-0 bg-cobalt-electric/20 rounded-full animate-pulse"></div>
+<span class="material-symbols-outlined text-cobalt-electric text-4xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-2">Welcome to your Sanctuary</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[280px]">Operational intelligence, grounded in evidence and calm.</p>
+</header>
+<!-- Conversational Area -->
+<div class="flex-1 overflow-y-auto space-y-6 chat-container pb-8 pr-1">
+<!-- System Response -->
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="glass-card rounded-2xl p-4 shadow-sm relative mb-2">
+<div class="absolute -top-3 left-4 bg-bio-lime text-on-secondary-fixed font-label-caps text-label-caps px-2 py-0.5 rounded-full flex items-center gap-1 breathing-chip">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                        Grounded
+                    </div>
+<p class="font-body-md text-body-md text-on-surface">System status is optimal. I have synchronized the operational packs for the current cycle. How can I assist your workflow today?</p>
+</div>
+<div class="flex gap-2 ml-2">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-widest">Flow Copilot • Just now</span>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex flex-col items-end max-w-[85%] ml-auto">
+<div class="bg-cobalt-electric text-white rounded-2xl rounded-tr-none p-4 shadow-lg">
+<p class="font-body-md text-body-md">Analyze the efficiency drop in the Logistics Pack from the last 4 hours.</p>
+</div>
+</div>
+<!-- Grounded Response with Data Visual -->
+<div class="flex flex-col items-start max-w-[90%]">
+<div class="glass-card rounded-2xl p-5 shadow-sm border-l-4 border-cobalt-electric">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-cobalt-electric" style="font-variation-settings: 'FILL' 1;">insights</span>
+<span class="font-label-caps text-label-caps text-cobalt-electric">Efficiency Analysis</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4">The drop (approx. 14%) correlates with a node latency spike in the Northern sector. Data indicates a 98.2% probability of sensor recalibration delay.</p>
+<!-- Evidence Mini-Card -->
+<div class="bg-white/30 rounded-xl p-3 border border-white/50 neumorphic-inset">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">NODE LATENCY SPLINE</span>
+<span class="font-data-sm text-data-sm text-error">Critical 420ms</span>
+</div>
+<div class="h-16 w-full relative overflow-hidden rounded-lg bg-linen/20">
+<!-- Simulation of a Liquid Motion Graph -->
+<svg class="w-full h-full" viewbox="0 0 200 60">
+<path class="opacity-40" d="M0 50 Q 25 45, 50 35 T 100 40 T 150 10 T 200 30 L 200 60 L 0 60 Z" fill="url(#grad)"></path>
+<path d="M0 50 Q 25 45, 50 35 T 100 40 T 150 10 T 200 30" fill="none" stroke="#2E5BFF" stroke-width="2"></path>
+<defs>
+<lineargradient id="grad" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#2E5BFF;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#2E5BFF;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Suggestions -->
+<div class="flex gap-2 overflow-x-auto pb-4 -mx-4 px-4 no-scrollbar">
+<button class="whitespace-nowrap px-4 py-2 rounded-full glass-card border-none neumorphic-flat font-label-caps text-label-caps text-cobalt-electric active:scale-95 transition-all">
+                    Recalibrate Sensors
+                </button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full glass-card border-none neumorphic-flat font-label-caps text-label-caps text-on-surface-variant active:scale-95 transition-all">
+                    Show Error Logs
+                </button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full glass-card border-none neumorphic-flat font-label-caps text-label-caps text-on-surface-variant active:scale-95 transition-all">
+                    Deploy Support
+                </button>
+</div>
+</div>
+</main>
+<!-- Bottom Input Sanctuary -->
+<div class="fixed bottom-0 w-full z-50 px-4 pb-8 pt-4 bg-linen/80 dark:bg-obsidian/80 backdrop-blur-lg rounded-t-3xl shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+<div class="relative flex items-center max-w-lg mx-auto">
+<div class="absolute left-4 z-10">
+<span class="material-symbols-outlined text-outline-variant">attachment</span>
+</div>
+<textarea class="w-full pl-12 pr-14 py-4 rounded-2xl border-none bg-oatmeal neumorphic-inset font-body-md text-on-surface focus:ring-2 focus:ring-cobalt-electric/20 transition-all resize-none" placeholder="Ask Flow Copilot..." rows="1" style="min-height: 56px;"></textarea>
+<button class="absolute right-2 w-12 h-12 bg-cobalt-electric text-white rounded-xl flex items-center justify-center shadow-lg active:scale-90 transition-all hover:shadow-cobalt-electric/40">
+<span class="material-symbols-outlined">arrow_upward</span>
+</button>
+</div>
+<!-- Navigation Bar integrated into the bottom area for mobile -->
+<div class="flex justify-around items-center h-16 mt-4">
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label-caps text-label-caps mt-1">Core</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-caps text-label-caps mt-1">Packs</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-6 py-2 animate-pulse">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-label-caps text-label-caps mt-1">Copilot</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-caps text-label-caps mt-1">Account</span>
+</div>
+</div>
+</div>
+<script>
+        // Auto-expand textarea script
+        const tx = document.getElementsByTagName("textarea");
+        for (let i = 0; i < tx.length; i++) {
+            tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+            tx[i].addEventListener("input", OnInput, false);
+        }
+
+        function OnInput() {
+            this.style.height = 0;
+            this.style.height = (this.scrollHeight) + "px";
+        }
+
+        // Micro-interaction for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => button.classList.add('scale-95'));
+            button.addEventListener('mouseup', () => button.classList.remove('scale-95'));
+        });
+    </script>
+</body></html>
+<nav class="navbar">
+  <div class="logo">FLOW 🌌</div>
+
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="analytics.html">Analytics</a>
+    <a href="payment.html">Payment</a>
+  </div>
+</nav>
