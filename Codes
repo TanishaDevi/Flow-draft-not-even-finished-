@@ -4095,3 +4095,288 @@
         });
     </script>
 </body></html>
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@500;600;700&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --base-unit: 8px;
+        }
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        .neumorphic-card {
+            box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.8), 5px 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .liquid-gradient-1 { background: linear-gradient(135deg, #2E5BFF 0%, #D6F34C 100%); }
+        .liquid-gradient-2 { background: linear-gradient(135deg, #993100 0%, #FFD2A0 100%); }
+        .liquid-gradient-3 { background: linear-gradient(135deg, #124af0 0%, #b7d32c 100%); }
+        .liquid-gradient-4 { background: linear-gradient(135deg, #566500 0%, #ffffff 100%); }
+        
+        .breath-animation {
+            animation: breath 4s ease-in-out infinite;
+        }
+        @keyframes breath {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "linen": "#FAF9F6",
+                        "surface-tint": "#124af0",
+                        "on-background": "#191b24",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#181e00",
+                        "secondary-fixed-dim": "#b7d32c",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f3f2ff",
+                        "background": "#fbf8ff",
+                        "on-primary-fixed-variant": "#0035be",
+                        "surface-bright": "#fbf8ff",
+                        "on-tertiary-container": "#ffece6",
+                        "obsidian": "#1A1B1E",
+                        "on-primary-fixed": "#001356",
+                        "surface-variant": "#e2e1ef",
+                        "on-surface": "#191b24",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "inverse-on-surface": "#f0effd",
+                        "on-secondary-fixed-variant": "#404c00",
+                        "outline-variant": "#c4c5d9",
+                        "secondary-fixed": "#d3f049",
+                        "primary": "#0040e0",
+                        "bio-lime": "#D6F34C",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#b8c3ff",
+                        "on-primary-container": "#efefff",
+                        "cobalt-electric": "#2E5BFF",
+                        "on-tertiary-fixed-variant": "#812800",
+                        "warm-glow": "#FFD2A0",
+                        "on-surface-variant": "#434656",
+                        "outline": "#747688",
+                        "surface": "#fbf8ff",
+                        "tertiary-fixed-dim": "#ffb59b",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#993100",
+                        "secondary-container": "#d3f049",
+                        "surface-container-high": "#e7e7f4",
+                        "tertiary-fixed": "#ffdbcf",
+                        "on-tertiary-fixed": "#380d00",
+                        "surface-container-highest": "#e2e1ef",
+                        "inverse-surface": "#2e303a",
+                        "primary-container": "#2e5bff",
+                        "surface-container": "#ededfa",
+                        "primary-fixed": "#dde1ff",
+                        "secondary": "#566500",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#5b6b00",
+                        "oatmeal": "#F2EFE9",
+                        "surface-dim": "#d9d9e6",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#c24100"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "section-gap": "64px",
+                        "container-padding": "32px",
+                        "margin-page": "48px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Noto Serif"],
+                        "headline-lg": ["Noto Serif"],
+                        "display-lg": ["Noto Serif"],
+                        "label-caps": ["Hanken Grotesk"],
+                        "data-lg": ["JetBrains Mono"],
+                        "headline-md": ["Noto Serif"],
+                        "data-sm": ["JetBrains Mono"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display-lg": ["56px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "data-lg": ["16px", { "lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "data-sm": ["13px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-linen text-on-surface">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-white/40 backdrop-blur-md flex justify-between items-center px-4 py-4 max-w-full shadow-[0_-5px_5px_rgba(255,255,255,0.8),5px_5px_10px_rgba(0,0,0,0.05)]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-cobalt-electric" style="font-variation-settings: 'FILL' 1;">bubble_chart</span>
+<h1 class="font-display-lg text-headline-md tracking-tighter text-cobalt-electric">Flow</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a technology executive with a calm expression, softly lit in a modern, light-mode office setting. The aesthetic is clean and high-humanist, with a focus on warm skin tones and sharp details against a blurred, airy background of linen and glass textures. The lighting is bright and natural, mimicking a digital sanctuary." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRFZwy9_JggcYbMOLsE0FHjtBVbEL4BOx4cVSakPjOJEkSTk7sH5hLPokKdeYSZVwcwrc3Bifp_NlFs3GNrBpLsMDXgRLB0xbDVwKNwzoFihWEdbKlZ8_aQy6ruu9LI9j-1JaueccwP_yuwIFa8nmpVs0V0iWV3al9VAk3S2sCQ4aVo6q8t2EpgDyItRCYcFbDnh0zDuLlkspkvwH9n57POzrw4VqUTFITRSP-v23hI2zaOn7EQrGED3Yza7rtBs8V7sSXhV01HclG"/>
+</div>
+</header>
+<main class="pt-24 pb-28 px-4 min-h-screen">
+<!-- Header Section -->
+<section class="mb-8">
+<span class="font-label-caps text-label-caps text-cobalt-electric mb-2 block tracking-[0.2em] opacity-80">ECOSYSTEM CATALOG</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-3">Industry Packs</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs leading-relaxed">
+                Deploy specialized operational intelligence tailored to your specific ecosystem requirements.
+            </p>
+</section>
+<!-- Catalog Grid -->
+<div class="grid grid-cols-1 gap-6">
+<!-- Food & Beverage Pack -->
+<div class="neumorphic-card bg-oatmeal rounded-3xl p-1 overflow-hidden transition-all duration-300 active:scale-95 group">
+<div class="bg-linen rounded-[22px] p-5 h-full relative overflow-hidden">
+<div class="absolute -top-10 -right-10 w-32 h-32 liquid-gradient-1 opacity-20 blur-3xl group-hover:opacity-40 transition-opacity"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 rounded-2xl bg-primary-container text-white shadow-lg">
+<span class="material-symbols-outlined text-[32px]">restaurant</span>
+</div>
+<span class="font-data-sm text-data-sm text-cobalt-electric bg-primary-fixed px-3 py-1 rounded-full breath-animation">Live Status</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Flow for Food &amp; Beverage</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Precision management for high-velocity culinary operations and supply chains.</p>
+<div class="flex items-center gap-2">
+<button class="bg-cobalt-electric text-on-primary font-label-caps text-label-caps px-6 py-3 rounded-xl shadow-lg active:scale-95 transition-transform">INITIALIZE PACK</button>
+<button class="p-3 text-outline hover:text-cobalt-electric transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Event Operations Pack -->
+<div class="neumorphic-card bg-oatmeal rounded-3xl p-1 overflow-hidden transition-all duration-300 active:scale-95 group">
+<div class="bg-linen rounded-[22px] p-5 h-full relative overflow-hidden">
+<div class="absolute -top-10 -right-10 w-32 h-32 liquid-gradient-2 opacity-20 blur-3xl group-hover:opacity-40 transition-opacity"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 rounded-2xl bg-tertiary-container text-white shadow-lg">
+<span class="material-symbols-outlined text-[32px]">festival</span>
+</div>
+<span class="font-data-sm text-data-sm text-tertiary bg-tertiary-fixed px-3 py-1 rounded-full">New Release</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Event Operations</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Dynamic logistics orchestration for large-scale gatherings and real-time venues.</p>
+<div class="flex items-center gap-2">
+<button class="bg-tertiary text-on-primary font-label-caps text-label-caps px-6 py-3 rounded-xl shadow-lg active:scale-95 transition-transform">INITIALIZE PACK</button>
+<button class="p-3 text-outline hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Retail / Warehouse Pack -->
+<div class="neumorphic-card bg-oatmeal rounded-3xl p-1 overflow-hidden transition-all duration-300 active:scale-95 group">
+<div class="bg-linen rounded-[22px] p-5 h-full relative overflow-hidden">
+<div class="absolute -top-10 -right-10 w-32 h-32 liquid-gradient-3 opacity-20 blur-3xl group-hover:opacity-40 transition-opacity"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 rounded-2xl bg-surface-tint text-white shadow-lg">
+<span class="material-symbols-outlined text-[32px]">inventory_2</span>
+</div>
+<span class="font-data-sm text-data-sm text-surface-tint bg-primary-fixed px-3 py-1 rounded-full">Enterprise</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Retail / Warehouse</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Inventory synchronization and labor distribution for modern commerce hubs.</p>
+<div class="flex items-center gap-2">
+<button class="bg-surface-tint text-on-primary font-label-caps text-label-caps px-6 py-3 rounded-xl shadow-lg active:scale-95 transition-transform">INITIALIZE PACK</button>
+<button class="p-3 text-outline hover:text-surface-tint transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Facilities & Service Pack -->
+<div class="neumorphic-card bg-oatmeal rounded-3xl p-1 overflow-hidden transition-all duration-300 active:scale-95 group">
+<div class="bg-linen rounded-[22px] p-5 h-full relative overflow-hidden">
+<div class="absolute -top-10 -right-10 w-32 h-32 liquid-gradient-4 opacity-20 blur-3xl group-hover:opacity-40 transition-opacity"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 rounded-2xl bg-secondary text-white shadow-lg">
+<span class="material-symbols-outlined text-[32px]">domain</span>
+</div>
+<span class="font-data-sm text-data-sm text-secondary bg-secondary-fixed px-3 py-1 rounded-full">Stable</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Facilities &amp; Service</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Autonomous monitoring and predictive maintenance for smart infrastructure.</p>
+<div class="flex items-center gap-2">
+<button class="bg-secondary text-on-primary font-label-caps text-label-caps px-6 py-3 rounded-xl shadow-lg active:scale-95 transition-transform">INITIALIZE PACK</button>
+<button class="p-3 text-outline hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-3xl bg-linen/80 backdrop-blur-lg border-t border-linen/20 shadow-2xl flex justify-around items-center h-20 px-4 pb-safe">
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 transition-opacity hover:opacity-100">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label-caps text-label-caps mt-1">Core</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-6 py-2 animate-pulse scale-110">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-caps text-label-caps mt-1">Packs</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 transition-opacity hover:opacity-100">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-label-caps text-label-caps mt-1">Copilot</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 transition-opacity hover:opacity-100">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-caps text-label-caps mt-1">Account</span>
+</div>
+</nav>
+<!-- Background Atmospheric Effect -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+<div class="absolute top-1/4 -left-1/4 w-[80vw] h-[80vw] bg-warm-glow opacity-5 blur-[100px] rounded-full"></div>
+<div class="absolute bottom-1/4 -right-1/4 w-[80vw] h-[80vw] bg-cobalt-electric opacity-5 blur-[100px] rounded-full"></div>
+</div>
+<script>
+        // Micro-interactions for the cards
+        document.querySelectorAll('.neumorphic-card').forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease-out';
+            });
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>
