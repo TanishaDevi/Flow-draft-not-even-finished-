@@ -2519,3 +2519,447 @@
     <a href="payment.html">Payment</a>
   </div>
 </nav>
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Galaxy Audit &amp; Oversight | FLOW</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Serif:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @id tailwind-config;
+        /* Custom Orbital & Glass Effects */
+        .glass-panel {
+            background: rgba(10, 10, 31, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(208, 188, 255, 0.3), transparent);
+        }
+        .rim-light {
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nebula-glow {
+            box-shadow: 0 0 40px 5px rgba(109, 59, 215, 0.15);
+        }
+        .starlight-dust {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+        .node-line {
+            background: rgba(208, 188, 255, 0.2);
+            position: absolute;
+            z-index: 0;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(208, 188, 255, 0.2); box-shadow: 0 0 0px rgba(208, 188, 255, 0); }
+            50% { border-color: rgba(208, 188, 255, 0.8); box-shadow: 0 0 15px rgba(208, 188, 255, 0.4); }
+        }
+        .animate-pulse-border {
+            animation: pulse-border 3s infinite ease-in-out;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-low": "#161c22",
+                      "on-primary-fixed": "#23005c",
+                      "inverse-on-surface": "#2b3137",
+                      "outline": "#958ea0",
+                      "on-primary": "#3c0091",
+                      "primary-fixed": "#e9ddff",
+                      "on-surface-variant": "#cbc3d7",
+                      "primary": "#d0bcff",
+                      "surface-container": "#1a2026",
+                      "on-tertiary-fixed-variant": "#574500",
+                      "inverse-surface": "#dde3eb",
+                      "surface": "#0e141a",
+                      "on-tertiary-container": "#4e3e00",
+                      "on-secondary": "#003731",
+                      "on-error-container": "#ffdad6",
+                      "surface-variant": "#2f353c",
+                      "tertiary-fixed-dim": "#eec200",
+                      "secondary-fixed-dim": "#3cddc7",
+                      "on-primary-fixed-variant": "#5516be",
+                      "error-container": "#93000a",
+                      "primary-container": "#a078ff",
+                      "error": "#ffb4ab",
+                      "on-secondary-container": "#004d44",
+                      "secondary-fixed": "#62fae3",
+                      "surface-tint": "#d0bcff",
+                      "inverse-primary": "#6d3bd7",
+                      "on-surface": "#dde3eb",
+                      "secondary-container": "#03c6b2",
+                      "on-secondary-fixed": "#00201c",
+                      "tertiary-fixed": "#ffe083",
+                      "on-secondary-fixed-variant": "#005047",
+                      "on-error": "#690005",
+                      "on-tertiary": "#3c2f00",
+                      "surface-bright": "#333a40",
+                      "tertiary": "#eec200",
+                      "surface-container-lowest": "#080f14",
+                      "on-primary-container": "#340080",
+                      "on-tertiary-fixed": "#231b00",
+                      "tertiary-container": "#cea700",
+                      "primary-fixed-dim": "#d0bcff",
+                      "surface-container-highest": "#2f353c",
+                      "surface-dim": "#0e141a",
+                      "secondary": "#44e2cd",
+                      "outline-variant": "#494454",
+                      "on-background": "#dde3eb",
+                      "surface-container-high": "#242b31",
+                      "background": "#0e141a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "node-gap": "2rem",
+                      "panel-padding": "1.25rem",
+                      "orbital-inner": "1.5rem",
+                      "orbital-outer": "4rem"
+              },
+              "fontFamily": {
+                      "display-lg": ["Noto Serif"],
+                      "headline-lg": ["Noto Serif"],
+                      "body-md": ["JetBrains Mono"],
+                      "label-sm": ["JetBrains Mono"],
+                      "data-lg": ["JetBrains Mono"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-sm": ["11px", {"lineHeight": "1", "fontWeight": "700"}],
+                      "data-lg": ["18px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md text-body-md selection:bg-primary/30 min-h-screen overflow-x-hidden">
+<!-- HUD Background -->
+<div class="fixed inset-0 z-0">
+
+<div class="absolute inset-0 starlight-dust"></div>
+</div>
+<!-- Navigation Drawer (JSON Authority) -->
+<aside class="fixed left-0 h-screen w-72 rounded-r-xl bg-oatmeal/30 dark:bg-obsidian/40 backdrop-blur-md flex flex-col p-8 z-40 shadow-xl border-r border-white/5">
+<div class="mb-10 left_align">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full border border-primary/40 flex items-center justify-center bg-primary/10">
+<span class="material-symbols-outlined text-primary">security</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface dark:text-surface-bright">FLOW</h1>
+</div>
+<div class="space-y-1">
+<div class="font-bold text-primary">Core Commander</div>
+<div class="text-xs text-on-surface-variant opacity-70">System Status: Optimal</div>
+<div class="text-[10px] tracking-widest text-secondary font-bold">SECTOR 7G</div>
+</div>
+</div>
+<nav class="flex-1 space-y-4">
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:pl-6 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">dashboard_customize</span>
+<span>Galaxy Hub</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:pl-6 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">group_work</span>
+<span>Team Stars</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 bg-cobalt-electric/10 dark:bg-bio-lime/10 text-cobalt-electric dark:text-bio-lime border-r-4 border-cobalt-electric dark:border-bio-lime transition-all duration-300" href="#">
+<span class="material-symbols-outlined">auto_graph</span>
+<span>Constellations</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:pl-6 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span>Nebula Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Top App Bar (JSON Authority) -->
+<header class="fixed top-0 right-0 left-72 h-16 bg-surface/40 dark:bg-obsidian/60 backdrop-blur-xl flex justify-between items-center px-10 z-50 border-b border-linen/10 dark:border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">hub</span>
+<span class="font-display-lg text-display-lg tracking-widest text-primary drop-shadow-[0_0_8px_rgba(46,91,255,0.8)]">AUDIT</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-4 text-xs font-bold tracking-tighter uppercase opacity-60">
+<span class="text-primary">Live Oversight Active</span>
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+</div>
+<div class="w-10 h-10 rounded-full border border-primary/40 p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="A high-fidelity 3D profile avatar of a cosmic administrator, featuring bioluminescent skin textures and glowing cybernetic ocular implants. The character is set against a backdrop of swirling deep-space nebulae in shades of violet and cobalt. Professional lighting emphasizes the sleek, futuristic aesthetic of the interstellar command center." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD14QHu2q7MqwEYBM8uoBnbgw2YpRtpYfNJ83AY6p_Efdac1h6Dxi9-SQ1LEGxwgou68aFwOrHElR1qFHjt3BdSEqPkOtT_0lPLOwuy1hWJOAffSKnvTqT_noNVrg7qhs5PpLvtS0aQ15L8UJf3cTH2IOAXY_Hzd9thDcjA9x5cDpYnyeMYZj6yzyyiZFTACc80p9B-eIdVvtMJRZ7HwhDRIyEL_sKUlxdC3DeubcqMwmKL7h4KiEInTKMocmTmIEbfPjqhnRQLXJHY"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-72 pt-24 pb-32 px-10 relative z-10">
+<!-- Orbital Header System -->
+<div class="grid grid-cols-12 gap-8 mb-12 items-start">
+<div class="col-span-12 lg:col-span-8">
+<div class="glass-panel rim-light p-8 rounded-xl nebula-glow">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg mb-2">Galaxy Audit &amp; Oversight</h2>
+<p class="text-on-surface-variant max-w-xl">Real-time immutable monitoring of all interstellar communications and room protocols. Security protocols are operating at Layer 7 clearance.</p>
+</div>
+<div class="text-right">
+<div class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary opacity-60">Last Sync</div>
+<div class="font-data-lg text-data-lg">2.44.09.112</div>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-4 gap-4">
+<div class="p-4 bg-white/5 border border-white/10 rounded-lg">
+<div class="text-xs text-on-surface-variant mb-1">Total Reviews</div>
+<div class="text-2xl font-bold">14,209</div>
+</div>
+<div class="p-4 bg-white/5 border border-white/10 rounded-lg">
+<div class="text-xs text-on-surface-variant mb-1">Reason Logs</div>
+<div class="text-2xl font-bold">882</div>
+</div>
+<div class="p-4 bg-white/5 border border-white/10 rounded-lg">
+<div class="text-xs text-on-surface-variant mb-1">Active Rooms</div>
+<div class="text-2xl font-bold text-secondary">42</div>
+</div>
+<div class="p-4 bg-white/5 border border-white/10 rounded-lg">
+<div class="text-xs text-on-surface-variant mb-1">Anomalies</div>
+<div class="text-2xl font-bold text-error">0</div>
+</div>
+</div>
+</div>
+</div>
+<!-- P0 MISSION PATCH ACTION -->
+<div class="col-span-12 lg:col-span-4 h-full">
+<div class="glass-panel rim-light p-8 rounded-xl h-full flex flex-col justify-between animate-pulse-border">
+<div>
+<div class="flex items-center gap-2 mb-4 text-error">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-bold text-xs tracking-widest uppercase">Emergency Protocol</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg mb-4">System Reset</h3>
+<p class="text-sm text-on-surface-variant mb-6">Execute a full state purge and mission-patching sequence. This action is immutable and logged to the central core.</p>
+</div>
+<button class="w-full py-4 bg-error-container text-on-error-container font-bold rounded-lg border border-error/50 hover:bg-error transition-colors flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">settings_backup_restore</span>
+<span>INITIATE MISSION PATCH</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Audit Trail Bento Grid -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Conversation Reviews List -->
+<div class="col-span-12 md:col-span-7 glass-panel rim-light rounded-xl overflow-hidden">
+<div class="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
+<h4 class="font-bold tracking-widest text-xs uppercase">Immutable Audit Trail</h4>
+<span class="material-symbols-outlined text-primary text-sm">history_edu</span>
+</div>
+<div class="p-0 max-h-[600px] overflow-y-auto">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface text-[10px] uppercase tracking-widest text-on-surface-variant border-b border-white/10">
+<tr>
+<th class="p-6 font-medium">Node ID</th>
+<th class="p-6 font-medium">Capture Reason</th>
+<th class="p-6 font-medium">Status</th>
+<th class="p-6 font-medium text-right">Coordinate</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-6 font-data-lg text-xs">#PX-9921</td>
+<td class="p-6">
+<div class="font-bold">Neural Pattern Mismatch</div>
+<div class="text-[10px] opacity-50">Log reference: Alpha-Delta-9</div>
+</td>
+<td class="p-6">
+<span class="px-2 py-1 bg-secondary/20 text-secondary text-[10px] rounded border border-secondary/30">VERIFIED</span>
+</td>
+<td class="p-6 text-right font-data-lg text-xs opacity-50">7.1.0</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-6 font-data-lg text-xs">#PX-9918</td>
+<td class="p-6">
+<div class="font-bold">Protocol Deviation</div>
+<div class="text-[10px] opacity-50">Log reference: Omega-1-Beta</div>
+</td>
+<td class="p-6">
+<span class="px-2 py-1 bg-secondary/20 text-secondary text-[10px] rounded border border-secondary/30">VERIFIED</span>
+</td>
+<td class="p-6 text-right font-data-lg text-xs opacity-50">7.0.8</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-6 font-data-lg text-xs">#PX-9912</td>
+<td class="p-6">
+<div class="font-bold">Interstellar Handshake Fail</div>
+<div class="text-[10px] opacity-50">Log reference: Gamma-Shift</div>
+</td>
+<td class="p-6">
+<span class="px-2 py-1 bg-primary/20 text-primary text-[10px] rounded border border-primary/30">PENDING</span>
+</td>
+<td class="p-6 text-right font-data-lg text-xs opacity-50">6.9.1</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="p-6 font-data-lg text-xs">#PX-9884</td>
+<td class="p-6">
+<div class="font-bold">Data Packet Fragmentation</div>
+<div class="text-[10px] opacity-50">Log reference: Sector-Sweep</div>
+</td>
+<td class="p-6">
+<span class="px-2 py-1 bg-secondary/20 text-secondary text-[10px] rounded border border-secondary/30">VERIFIED</span>
+</td>
+<td class="p-6 text-right font-data-lg text-xs opacity-50">6.8.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Oversight Visualization -->
+<div class="col-span-12 md:col-span-5 flex flex-col gap-6">
+<!-- Connect Room Status Card -->
+<div class="glass-panel rim-light rounded-xl p-6 h-[280px] relative overflow-hidden flex flex-col justify-between">
+
+<div class="relative z-10 flex justify-between items-start">
+<div>
+<h4 class="font-bold text-xs tracking-widest uppercase mb-1">Room Oversight</h4>
+<div class="font-display-lg text-[24px] text-secondary">Connect Cluster 04</div>
+</div>
+<div class="w-3 h-3 bg-secondary rounded-full animate-ping"></div>
+</div>
+<div class="relative z-10 flex gap-4 overflow-x-auto pb-2 no-scrollbar">
+<div class="min-w-[80px] flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full border-2 border-secondary p-1">
+<img class="w-full h-full rounded-full" data-alt="Futuristic glowing orb representing a digital entity, with intricate crystalline structures visible inside the translucent shell. The core pulses with soft emerald light, casting reflections onto the dark glass interface it rests upon. Minimalist interstellar aesthetic, high-key lighting accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHknD0TX73konBFGme4yjBEBMvrlXLrLYEr-Mr4TokDeV3-sg7wcvt10idh5hjldy_QFajkjERmbUTKcZp2GGbL3bZ7MGX5j3J9zN4-CmbBB7JIpfKcBc3Wc0rjuQ2p8rIjYlxqz16qg1XBwuEu7yk9LoR6mSppf6pzPDNFx2tFH_NgPPsqBjcvQUJZmRulwmIL5I14Sf1quGnoiA_Koyx9baFZtGJlfynDYLNi8ETFEUx6spCKzrKAWBFOPno8SdeNEk2d-9qZt5F"/>
+</div>
+<span class="text-[10px] font-bold">ALPHA</span>
+</div>
+<div class="min-w-[80px] flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full border-2 border-white/20 p-1">
+<img class="w-full h-full rounded-full" data-alt="A stylized geometric avatar representing a system monitor, featuring floating hexagonal panels and a central glowing sensor array. The color palette is composed of slate grays and muted purples, with a sharp accent of cyan light in the center. Futuristic, corporate interstellar design style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDISQUkPDHCykpP2FrZSmWRf27xB8JvRbLJKdtiPS_kb9myo_iGoOyNfUe5c7fHNG2ObcZZ5Xs7Dw_tplRHLovwDlmfa5WTL2ELmPPCi5X74Kk1YmJqWGT7FVqO4qKi7knh-84OA4sCMDuLndHEpazzB7XFdnc1bYO3MaXzzjrRkZ3sNOKfawlXeURzlHDrtpaTsKAkwjS2RMc65w0N1-OTeU_dRwEMnGjiz0IaCx9zSCVa8sxw3TEOX73CVGAwAuJh4iaVmC6l0BJA"/>
+</div>
+<span class="text-[10px] font-bold opacity-50">BRAVO</span>
+</div>
+<div class="min-w-[80px] flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full border-2 border-white/20 p-1">
+<img class="w-full h-full rounded-full" data-alt="Abstract representation of a data node, appearing as a sphere of woven light fibers in electric violet and silver. It sits within a vacuum-sealed chamber, reflecting the surrounding dark metallic surfaces. Highly detailed render, sci-fi laboratory ambiance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgHgG28POYMmb8TtBbG5qFiETwuRevMaLmFoDRofwIcMbzQVldaup2PHe0gODfAL4Xb60JD52VOa6gJ2DiMS9DMP3iPa3ePNbPgns-kP08LlmmpOzTzYo5WSUcBDYfXlPwTdwYhlQIdLVnfIR3rrEOpNjOZ0tfp67IDNgM-y8P79jvYHtj9wXbNYqUHwUGcgK3bwZ5-AVJEQP92gxdgPjX8fXWUnMOjLsozaNJjm-Iiv1f_YixzXxBrPZjdyUkylFdbB5YyI0lLaBe"/>
+</div>
+<span class="text-[10px] font-bold opacity-50">CHARLIE</span>
+</div>
+</div>
+</div>
+<!-- Reason Capture Log -->
+<div class="glass-panel rim-light rounded-xl p-6 flex-1 flex flex-col">
+<h4 class="font-bold text-xs tracking-widest uppercase mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">terminal</span>
+                        Live Capture Log
+                    </h4>
+<div class="flex-1 font-data-lg text-[11px] leading-relaxed text-on-surface-variant/80 space-y-2 overflow-y-auto pr-2">
+<div class="flex gap-3">
+<span class="text-secondary opacity-50">[09:12:44]</span>
+<span>Awaiting handshake from Sector 9...</span>
+</div>
+<div class="flex gap-3">
+<span class="text-secondary opacity-50">[09:12:45]</span>
+<span class="text-primary">Oversight policy applied: REASON_CAPTURE_AUTO</span>
+</div>
+<div class="flex gap-3">
+<span class="text-secondary opacity-50">[09:12:48]</span>
+<span class="bg-primary/20 px-1 rounded">DECRYPTING_NODE_PX_9921</span>
+</div>
+<div class="flex gap-3">
+<span class="text-secondary opacity-50">[09:12:50]</span>
+<span class="text-secondary">Capture Success. Reason: Manual Review Trigger.</span>
+</div>
+<div class="flex gap-3">
+<span class="text-secondary opacity-50">[09:13:02]</span>
+<span>Integrity Check: PASS</span>
+</div>
+<div class="flex gap-3">
+<span class="text-secondary opacity-50">[09:13:05]</span>
+<span class="animate-pulse text-error">CRITICAL: Mission Patch Required in Sector 7.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Nav Dock (JSON Authority) -->
+<nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-around gap-8 bg-white/40 dark:bg-obsidian/50 backdrop-blur-lg w-auto min-w-[320px] rounded-full px-10 py-4 border border-linen/20 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]">
+<button class="text-on-surface-variant/60 dark:text-outline-variant/50 hover:scale-110 transition-all">
+<span class="material-symbols-outlined">space_dashboard</span>
+</button>
+<button class="text-on-surface-variant/60 dark:text-outline-variant/50 hover:scale-110 transition-all">
+<span class="material-symbols-outlined">diversity_3</span>
+</button>
+<button class="text-cobalt-electric dark:text-bio-lime scale-125 drop-shadow-[0_0_12px_rgba(214,243,76,0.6)] animate-pulse">
+<span class="material-symbols-outlined">insights</span>
+</button>
+<button class="text-on-surface-variant/60 dark:text-outline-variant/50 hover:scale-110 transition-all">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</nav>
+<!-- Interactive Data Links Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rows = document.querySelectorAll('tr');
+            rows.forEach(row => {
+                row.addEventListener('mouseenter', () => {
+                    const id = row.querySelector('td')?.textContent;
+                    if (id) console.log(`Inspecting Node: ${id}`);
+                });
+            });
+
+            // Pulse effect for emergency button
+            const resetBtn = document.querySelector('button.bg-error-container');
+            resetBtn.addEventListener('click', () => {
+                if (confirm('Initiate System Reset? All active sessions will be terminated.')) {
+                    document.body.style.filter = 'invert(1) grayscale(1)';
+                    setTimeout(() => {
+                        document.body.style.filter = '';
+                        alert('System patched to Revision 8.4.1. All nodes recalibrated.');
+                    }, 500);
+                }
+            });
+        });
+    </script>
+</body></html>
+<nav class="navbar">
+  <div class="logo">FLOW 🌌</div>
+
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="analytics.html">Analytics</a>
+    <a href="payment.html">Payment</a>
+  </div>
+</nav>
