@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Galaxy Hub - Flow Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Serif:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#eec200",
+                        "surface-bright": "#333a40",
+                        "tertiary-container": "#cea700",
+                        "error": "#ffb4ab",
+                        "on-background": "#dde3eb",
+                        "on-secondary": "#003731",
+                        "surface-container": "#1a2026",
+                        "inverse-primary": "#6d3bd7",
+                        "primary-container": "#a078ff",
+                        "surface-container-highest": "#2f353c",
+                        "surface-container-high": "#242b31",
+                        "surface": "#0e141a",
+                        "surface-container-low": "#161c22",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary": "#3c2f00",
+                        "inverse-on-surface": "#2b3137",
+                        "inverse-surface": "#dde3eb",
+                        "on-surface-variant": "#cbc3d7",
+                        "primary-fixed-dim": "#d0bcff",
+                        "on-surface": "#dde3eb",
+                        "on-tertiary-fixed-variant": "#574500",
+                        "on-secondary-fixed-variant": "#005047",
+                        "secondary-fixed": "#62fae3",
+                        "primary": "#d0bcff",
+                        "surface-container-lowest": "#080f14",
+                        "outline": "#958ea0",
+                        "on-primary-fixed-variant": "#5516be",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#2f353c",
+                        "tertiary-fixed": "#ffe083",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#4e3e00",
+                        "secondary-fixed-dim": "#3cddc7",
+                        "tertiary": "#eec200",
+                        "on-secondary-container": "#004d44",
+                        "outline-variant": "#494454",
+                        "secondary-container": "#03c6b2",
+                        "surface-dim": "#0e141a",
+                        "on-primary": "#3c0091",
+                        "surface-tint": "#d0bcff",
+                        "on-primary-container": "#340080",
+                        "on-tertiary-fixed": "#231b00",
+                        "primary-fixed": "#e9ddff",
+                        "on-primary-fixed": "#23005c",
+                        "background": "#0e141a",
+                        "error-container": "#93000a",
+                        "secondary": "#44e2cd",
+                        "obsidian": "#05050a",
+                        "cobalt-electric": "#2e5bff",
+                        "bio-lime": "#d6f34c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "panel-padding": "1.25rem",
+                        "node-gap": "2rem",
+                        "orbital-outer": "4rem",
+                        "orbital-inner": "1.5rem",
+                        "margin-page": "1rem",
+                        "gutter": "1rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Noto Serif"],
+                        "display-lg": ["Noto Serif"],
+                        "body-md": ["JetBrains Mono"],
+                        "headline-lg": ["Noto Serif"],
+                        "data-lg": ["JetBrains Mono"],
+                        "label-sm": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "data-lg": ["18px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "label-sm": ["11px", {"lineHeight": "1", "fontWeight": "700"}],
+                        "label-caps": ["10px", {"lineHeight": "1", "fontWeight": "700", "letterSpacing": "0.1em"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0e141a;
+            color: #dde3eb;
+            overflow-x: hidden;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .glass-panel {
+            background: rgba(10, 10, 31, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-panel::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .bioluminescent-border-lime {
+            border-image: linear-gradient(to bottom right, #d6f34c, transparent 50%, transparent 50%, #d6f34c) 1;
+        }
+
+        .bioluminescent-border-violet {
+            border-image: linear-gradient(to bottom right, #d0bcff, transparent 50%, transparent 50%, #d0bcff) 1;
+        }
+
+        @keyframes orbit-cw {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes orbit-ccw {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+        @keyframes core-pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(46,91,255,0.6)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 40px rgba(46,91,255,0.9)); }
+        }
+
+        .orbit-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kpi-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(10, 10, 31, 0.8);
+            border: 1px solid rgba(214, 243, 76, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(214, 243, 76, 0.2);
+        }
+
+        .parallax-bg {
+            background: radial-gradient(circle at center, #1a1a3a 0%, #05050a 100%);
+        }
+
+        .nebula-blur {
+            position: fixed;
+            width: 150vw;
+            height: 150vh;
+            top: -25vh;
+            left: -25vw;
+            background: radial-gradient(circle at 20% 30%, rgba(46, 91, 255, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(214, 243, 76, 0.1) 0%, transparent 40%),
+                        radial-gradient(circle at 50% 50%, rgba(206, 167, 0, 0.05) 0%, transparent 60%);
+            z-index: -1;
+            animation: nebula-float 60s infinite linear;
+        }
+
+        @keyframes nebula-float {
+            0% { transform: translate(0,0) rotate(0deg); }
+            50% { transform: translate(-5vw, 5vw) rotate(5deg); }
+            100% { transform: translate(0,0) rotate(0deg); }
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="selection:bg-bio-lime selection:text-obsidian">
+<!-- Ambient Background -->
+<div class="nebula-blur"></div>
+<div class="fixed inset-0 pointer-events-none opacity-20">
+
+</div>
+<!-- Top App Bar -->
+<header class="bg-surface/40 dark:bg-obsidian/60 backdrop-blur-xl text-cobalt-electric dark:text-bio-lime border-b border-linen/10 dark:border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] fixed top-0 full-width flex justify-between items-center w-full px-margin-page py-4 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-cobalt-electric dark:text-bio-lime">hub</span>
+<span class="font-display-lg text-[24px] tracking-widest text-cobalt-electric dark:text-bio-lime drop-shadow-[0_0_8px_rgba(46,91,255,0.8)]">FLOW</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-bio-lime/30 p-0.5 overflow-hidden">
+<img class="w-full h-full object-cover rounded-full" data-alt="A highly detailed close-up of a futuristic human avatar with bioluminescent skin patterns and glowing cybernetic eye enhancements. The background is a dark, tech-infused environment with soft cobalt and lime green ambient lights, matching the interstellar command center aesthetic. The portrait should feel ethereal, authoritative, and sophisticated, with high-fidelity textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARCHjKwMPFstF35Sb0p7jMN-TaZa3doRsNPgi0Xo0uXxslAM6MLaVmRpqMJN5SUkkH6EkH4uwg7rqLr2JSy8J2JZ8kdd1ko6xAmjuxuU_77ZKxXyuw4Qu1Nvg-uFHY6wxRWAbXPoTpfJK_Hg6QqMPRtZLK0ET1yZ0Y0IInFISuAiwhO1X5ceGDE-b3FXQbOZpgxnarKTBvGHsdmWqpmD_Zn3xHRERY3ND3ZUFeZIGjzfPYP_RLfUI17Z5w8XYKgPZkZBVF5qIGfktf"/>
+</div>
+</header>
+<main class="pt-24 pb-32 px-margin-page min-h-screen flex flex-col items-center">
+<!-- Orbital Core Section -->
+<section class="relative w-full h-[400px] flex items-center justify-center overflow-visible mb-12">
+<!-- Connecting lines background effect -->
+<svg class="absolute inset-0 w-full h-full opacity-20 pointer-events-none">
+<line stroke="white" stroke-width="0.5" x1="50%" x2="10%" y1="50%" y2="20%"></line>
+<line stroke="white" stroke-width="0.5" x1="50%" x2="90%" y1="50%" y2="30%"></line>
+<line stroke="white" stroke-width="0.5" x1="50%" x2="80%" y1="50%" y2="80%"></line>
+<line stroke="white" stroke-width="0.5" x1="50%" x2="20%" y1="50%" y2="70%"></line>
+</svg>
+<!-- Outer Orbit -->
+<div class="orbit-ring w-[320px] h-[320px]" style="animation: orbit-cw 30s linear infinite;">
+<div class="kpi-node" style="top: 0; transform: translateY(-50%);">
+<span class="text-[10px] text-bio-lime font-bold">REVENUE</span>
+<span class="text-xs font-bold">$4.2M</span>
+</div>
+<div class="kpi-node" style="bottom: 0; transform: translateY(50%);">
+<span class="text-[10px] text-bio-lime font-bold">ACTIVE</span>
+<span class="text-xs font-bold">892</span>
+</div>
+</div>
+<!-- Inner Orbit -->
+<div class="orbit-ring w-[200px] h-[200px]" style="animation: orbit-ccw 20s linear infinite;">
+<div class="kpi-node" style="left: 0; transform: translateX(-50%);">
+<span class="text-[10px] text-secondary font-bold">PULSE</span>
+<span class="text-xs font-bold">98%</span>
+</div>
+<div class="kpi-node" style="right: 0; transform: translateX(50%);">
+<span class="text-[10px] text-error font-bold">INCIDENTS</span>
+<span class="text-xs font-bold">04</span>
+</div>
+</div>
+<!-- Central Core -->
+<div class="relative w-32 h-32 flex items-center justify-center rounded-full bg-obsidian border-2 border-cobalt-electric shadow-[0_0_40px_rgba(46,91,255,0.4)] z-10" style="animation: core-pulse 4s ease-in-out infinite;">
+
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="text-xs font-bold tracking-widest text-white">CORE</span>
+<span class="text-[10px] text-cobalt-electric">STABLE</span>
+</div>
+</div>
+</section>
+<!-- Glass Cards Section -->
+<section class="w-full grid grid-cols-2 gap-4 mb-8">
+<!-- Floor State Card -->
+<div class="glass-panel p-4 rounded-xl bioluminescent-border-lime">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-bio-lime text-lg">layers</span>
+<span class="text-[10px] px-1.5 py-0.5 bg-bio-lime/20 text-bio-lime rounded">LIVE</span>
+</div>
+<h3 class="font-label-caps text-on-surface-variant mb-1">FLOOR STATE</h3>
+<div class="flex items-end gap-1">
+<span class="text-2xl font-bold font-data-lg text-white">84%</span>
+<span class="material-symbols-outlined text-bio-lime text-xs mb-1">trending_up</span>
+</div>
+<div class="mt-3 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-bio-lime w-4/5 shadow-[0_0_10px_#d6f34c]"></div>
+</div>
+</div>
+<!-- Stock Risk Card -->
+<div class="glass-panel p-4 rounded-xl bioluminescent-border-violet">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-primary text-lg">inventory_2</span>
+<span class="text-[10px] px-1.5 py-0.5 bg-error/20 text-error rounded">ALERT</span>
+</div>
+<h3 class="font-label-caps text-on-surface-variant mb-1">STOCK RISK</h3>
+<div class="flex items-end gap-1">
+<span class="text-2xl font-bold font-data-lg text-white">LOW</span>
+</div>
+<p class="text-[10px] mt-2 text-outline-variant">4 sectors requiring refill in Galaxy Hub 7.</p>
+</div>
+</section>
+<!-- Star Stream (Notifications) -->
+<section class="w-full">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile flex items-center gap-2">
+<span class="w-2 h-2 bg-cobalt-electric rounded-full animate-pulse"></span>
+                    STAR STREAM
+                </h2>
+<button class="text-label-caps text-cobalt-electric border border-cobalt-electric/30 px-3 py-1 rounded-full text-[10px]">HISTORY</button>
+</div>
+<div class="space-y-4">
+<!-- Stream Item 1 -->
+<div class="glass-panel p-4 rounded-xl flex gap-4 items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center border border-white/10 shrink-0">
+<span class="material-symbols-outlined text-secondary">rocket_launch</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<span class="font-bold text-xs text-white">Cargo Arrival</span>
+<span class="text-[9px] text-outline-variant">2m ago</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-1">D-78 freighter docked at Gate 4 with platinum supplies.</p>
+</div>
+</div>
+<!-- Stream Item 2 -->
+<div class="glass-panel p-4 rounded-xl flex gap-4 items-center">
+<div class="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center border border-error/30 shrink-0">
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<span class="font-bold text-xs text-white">Thermal Surge</span>
+<span class="text-[9px] text-outline-variant">15m ago</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-1">Minor spike in Sector 3 reactor cooling loop detected.</p>
+</div>
+</div>
+<!-- Stream Item 3 -->
+<div class="glass-panel p-4 rounded-xl flex gap-4 items-center">
+<div class="w-10 h-10 rounded-full bg-cobalt-electric/10 flex items-center justify-center border border-cobalt-electric/30 shrink-0">
+<span class="material-symbols-outlined text-cobalt-electric">group</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<span class="font-bold text-xs text-white">Team Shift</span>
+<span class="text-[9px] text-outline-variant">1h ago</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-1">Alpha team rotations complete. Commander Vane on deck.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Nav Bar -->
+<nav class="bg-white/40 dark:bg-obsidian/50 backdrop-blur-lg border border-linen/20 dark:border-white/10 shadow-2xl fixed bottom-8 left-1/2 -translate-x-1/2 w-auto min-w-[320px] rounded-full px-6 py-3 z-50 flex items-center justify-around gap-gutter">
+<button class="text-cobalt-electric dark:text-bio-lime scale-125 drop-shadow-[0_0_12px_rgba(214,243,76,0.6)] animate-pulse">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">space_dashboard</span>
+</button>
+<button class="text-on-surface-variant/60 dark:text-outline-variant/50 hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined">diversity_3</span>
+</button>
+<button class="text-on-surface-variant/60 dark:text-outline-variant/50 hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined">insights</span>
+</button>
+<button class="text-on-surface-variant/60 dark:text-outline-variant/50 hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction for clicking nodes
+        document.querySelectorAll('.kpi-node').forEach(node => {
+            node.addEventListener('mousedown', () => {
+                node.style.transform += ' scale(0.9)';
+            });
+            node.addEventListener('mouseup', () => {
+                node.style.transform = node.style.transform.replace(' scale(0.9)', '');
+            });
+        });
+
+        // Parallax effect for nebula
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            const nebula = document.querySelector('.nebula-blur');
+            nebula.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+        });
+    </script>
+</body></html>

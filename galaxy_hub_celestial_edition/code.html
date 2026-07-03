@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Galaxy Hub - Flow Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Serif:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#eec200",
+                        "surface-bright": "#333a40",
+                        "tertiary-container": "#cea700",
+                        "error": "#ffb4ab",
+                        "on-background": "#dde3eb",
+                        "on-secondary": "#003731",
+                        "surface-container": "#1a2026",
+                        "inverse-primary": "#6d3bd7",
+                        "primary-container": "#a078ff",
+                        "surface-container-highest": "#2f353c",
+                        "surface-container-high": "#242b31",
+                        "surface": "#0e141a",
+                        "surface-container-low": "#161c22",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary": "#3c2f00",
+                        "inverse-on-surface": "#2b3137",
+                        "inverse-surface": "#dde3eb",
+                        "on-surface-variant": "#cbc3d7",
+                        "primary-fixed-dim": "#d0bcff",
+                        "on-surface": "#dde3eb",
+                        "on-tertiary-fixed-variant": "#574500",
+                        "on-secondary-fixed-variant": "#005047",
+                        "secondary-fixed": "#62fae3",
+                        "primary": "#d0bcff",
+                        "surface-container-lowest": "#080f14",
+                        "outline": "#958ea0",
+                        "on-primary-fixed-variant": "#5516be",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#2f353c",
+                        "tertiary-fixed": "#ffe083",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#4e3e00",
+                        "secondary-fixed-dim": "#3cddc7",
+                        "tertiary": "#eec200",
+                        "on-secondary-container": "#004d44",
+                        "outline-variant": "#494454",
+                        "secondary-container": "#03c6b2",
+                        "surface-dim": "#0e141a",
+                        "on-primary": "#3c0091",
+                        "surface-tint": "#d0bcff",
+                        "on-primary-container": "#340080",
+                        "on-tertiary-fixed": "#231b00",
+                        "primary-fixed": "#e9ddff",
+                        "on-primary-fixed": "#23005c",
+                        "background": "#0e141a",
+                        "error-container": "#93000a",
+                        "secondary": "#44e2cd",
+                        "obsidian": "#05050a",
+                        "cobalt-electric": "#2e5bff",
+                        "bio-lime": "#d6f34c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "panel-padding": "1.25rem",
+                        "node-gap": "2rem",
+                        "orbital-outer": "4rem",
+                        "orbital-inner": "1.5rem",
+                        "margin-page": "1rem",
+                        "gutter": "1rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Noto Serif"],
+                        "display-lg": ["Noto Serif"],
+                        "body-md": ["JetBrains Mono"],
+                        "headline-lg": ["Noto Serif"],
+                        "data-lg": ["JetBrains Mono"],
+                        "label-sm": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "data-lg": ["18px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "label-sm": ["11px", {"lineHeight": "1", "fontWeight": "700"}],
+                        "label-caps": ["10px", {"lineHeight": "1", "fontWeight": "700", "letterSpacing": "0.1em"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #080f14;
+            color: #dde3eb;
+            overflow-x: hidden;
+            font-family: 'JetBrains Mono', monospace;
+            min-height: 100vh;
+        }
+
+        #starfield-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .glass-panel {
+            background: rgba(13, 20, 26, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .bioluminescent-border-lime {
+            border: 1px solid rgba(214, 243, 76, 0.3);
+            box-shadow: inset 0 0 10px rgba(214, 243, 76, 0.05), 0 0 15px rgba(214, 243, 76, 0.1);
+        }
+
+        .bioluminescent-border-violet {
+            border: 1px solid rgba(208, 188, 255, 0.3);
+            box-shadow: inset 0 0 10px rgba(208, 188, 255, 0.05), 0 0 15px rgba(208, 188, 255, 0.1);
+        }
+        
+        .bioluminescent-border-cobalt {
+            border: 1px solid rgba(46, 91, 255, 0.3);
+            box-shadow: inset 0 0 10px rgba(46, 91, 255, 0.05), 0 0 15px rgba(46, 91, 255, 0.1);
+        }
+
+        .text-glow-lime {
+            text-shadow: 0 0 10px rgba(214, 243, 76, 0.6);
+        }
+
+        .text-glow-cobalt {
+            text-shadow: 0 0 10px rgba(46, 91, 255, 0.6);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        #three-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body class="selection:bg-bio-lime selection:text-obsidian">
+<!-- Starfield Background -->
+<canvas id="starfield-canvas"></canvas>
+<!-- Top App Bar -->
+<header class="bg-obsidian/40 backdrop-blur-xl border-b border-white/5 fixed top-0 w-full px-margin-page py-4 z-50 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-bio-lime text-glow-lime">hub</span>
+<span class="font-display-lg text-[24px] tracking-widest text-bio-lime text-glow-lime">FLOW</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-bio-lime/30 p-0.5 overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARCHjKwMPFstF35Sb0p7jMN-TaZa3doRsNPgi0Xo0uXxslAM6MLaVmRpqMJN5SUkkH6EkH4uwg7rqLr2JSy8J2JZ8kdd1ko6xAmjuxuU_77ZKxXyuw4Qu1Nvg-uFHY6wxRWAbXPoTpfJK_Hg6QqMPRtZLK0ET1yZ0Y0IInFISuAiwhO1X5ceGDE-b3FXQbOZpgxnarKTBvGHsdmWqpmD_Zn3xHRERY3ND3ZUFeZIGjzfPYP_RLfUI17Z5w8XYKgPZkZBVF5qIGfktf"/>
+</div>
+</header>
+<main class="pt-24 pb-32 px-margin-page min-h-screen flex flex-col items-center">
+<!-- Orbital Core Section (Three.js Replace) -->
+<section class="relative w-full h-[400px] flex items-center justify-center overflow-visible mb-12">
+<div id="three-container"></div>
+<!-- Absolute overlay elements for data points can be placed here if needed, 
+             but we rely on the 3D scene for the core visual -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="glass-panel px-4 py-2 rounded-full border-bio-lime/20 bg-black/20 translate-y-32">
+<span class="text-[10px] text-bio-lime font-bold tracking-widest uppercase">System Synchronized</span>
+</div>
+</div>
+</section>
+<!-- Glass Cards Section -->
+<section class="w-full grid grid-cols-2 gap-4 mb-8">
+<!-- Floor State Card -->
+<div class="glass-panel p-4 rounded-xl bioluminescent-border-lime group">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-bio-lime text-lg">layers</span>
+<span class="text-[10px] px-1.5 py-0.5 bg-bio-lime/20 text-bio-lime rounded font-bold">LIVE</span>
+</div>
+<h3 class="font-label-caps text-on-surface-variant mb-1 drop-shadow-md">FLOOR STATE</h3>
+<div class="flex items-end gap-1">
+<span class="text-2xl font-bold font-data-lg text-white text-glow-lime">84%</span>
+<span class="material-symbols-outlined text-bio-lime text-xs mb-1">trending_up</span>
+</div>
+<div class="mt-3 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-bio-lime w-4/5 shadow-[0_0_10px_#d6f34c]"></div>
+</div>
+</div>
+<!-- Stock Risk Card -->
+<div class="glass-panel p-4 rounded-xl bioluminescent-border-violet">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-primary text-lg">inventory_2</span>
+<span class="text-[10px] px-1.5 py-0.5 bg-error/20 text-error rounded font-bold">ALERT</span>
+</div>
+<h3 class="font-label-caps text-on-surface-variant mb-1 drop-shadow-md">STOCK RISK</h3>
+<div class="flex items-end gap-1">
+<span class="text-2xl font-bold font-data-lg text-white">LOW</span>
+</div>
+<p class="text-[10px] mt-2 text-outline-variant leading-tight">4 sectors requiring refill in Galaxy Hub 7.</p>
+</div>
+</section>
+<!-- Star Stream (Notifications) -->
+<section class="w-full">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile flex items-center gap-2 drop-shadow-lg">
+<span class="w-2 h-2 bg-cobalt-electric rounded-full animate-pulse shadow-[0_0_8px_rgba(46,91,255,1)]"></span>
+                STAR STREAM
+            </h2>
+<button class="text-label-caps text-cobalt-electric border border-cobalt-electric/30 px-3 py-1 rounded-full text-[10px] backdrop-blur-sm">HISTORY</button>
+</div>
+<div class="space-y-4">
+<!-- Stream Item 1 -->
+<div class="glass-panel p-4 rounded-xl flex gap-4 items-center bioluminescent-border-cobalt/20">
+<div class="w-10 h-10 rounded-full bg-surface-container/40 flex items-center justify-center border border-white/10 shrink-0">
+<span class="material-symbols-outlined text-secondary">rocket_launch</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<span class="font-bold text-xs text-white drop-shadow-md">Cargo Arrival</span>
+<span class="text-[9px] text-outline-variant">2m ago</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-1 drop-shadow-sm">D-78 freighter docked at Gate 4 with platinum supplies.</p>
+</div>
+</div>
+<!-- Stream Item 2 -->
+<div class="glass-panel p-4 rounded-xl flex gap-4 items-center border-error/20">
+<div class="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center border border-error/30 shrink-0">
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<span class="font-bold text-xs text-white drop-shadow-md">Thermal Surge</span>
+<span class="text-[9px] text-outline-variant">15m ago</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-1 drop-shadow-sm">Minor spike in Sector 3 reactor cooling loop detected.</p>
+</div>
+</div>
+<!-- Stream Item 3 -->
+<div class="glass-panel p-4 rounded-xl flex gap-4 items-center bioluminescent-border-cobalt/20">
+<div class="w-10 h-10 rounded-full bg-cobalt-electric/10 flex items-center justify-center border border-cobalt-electric/30 shrink-0">
+<span class="material-symbols-outlined text-cobalt-electric">group</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<span class="font-bold text-xs text-white drop-shadow-md">Team Shift</span>
+<span class="text-[9px] text-outline-variant">1h ago</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-1 drop-shadow-sm">Alpha team rotations complete. Commander Vane on deck.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Nav Bar -->
+<nav class="bg-obsidian/40 backdrop-blur-xl border border-white/10 shadow-2xl fixed bottom-8 left-1/2 -translate-x-1/2 w-auto min-w-[320px] rounded-full px-6 py-3 z-50 flex items-center justify-around gap-gutter">
+<button class="text-bio-lime scale-125 drop-shadow-[0_0_12px_rgba(214,243,76,0.6)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">space_dashboard</span>
+</button>
+<button class="text-outline-variant/60 hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined">diversity_3</span>
+</button>
+<button class="text-outline-variant/60 hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined">insights</span>
+</button>
+<button class="text-outline-variant/60 hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</nav>
+<script>
+    // --- Starfield Shader Implementation ---
+    const canvas = document.getElementById('starfield-canvas');
+    const gl = canvas.getContext('webgl');
+
+    const vsSource = `
+        attribute vec4 a_position;
+        varying vec2 v_texCoord;
+        void main() {
+            gl_Position = a_position;
+            v_texCoord = a_position.xy * 0.5 + 0.5;
+        }
+    `;
+
+    const fsSource = `
+        precision highp float;
+        uniform float u_time;
+        uniform vec2 u_resolution;
+        varying vec2 v_texCoord;
+
+        float hash(vec2 p) {
+            p = fract(p * vec2(123.34, 456.21));
+            p += dot(p, p + 45.32);
+            return fract(p.x * p.y);
+        }
+
+        void main() {
+            vec2 uv = v_texCoord;
+            vec2 st = uv * u_resolution.xy / max(u_resolution.x, u_resolution.y);
+            
+            vec3 color = vec3(0.02, 0.04, 0.07); // Slightly deeper space dark blue for better contrast
+            
+            for(float i = 0.0; i < 4.0; i++) {
+                float size = 100.0 + i * 150.0;
+                vec2 ipos = floor(st * size);
+                vec2 fpos = fract(st * size);
+                
+                float h = hash(ipos);
+                if(h > 0.98) {
+                    float twinkle = sin(u_time * (1.0 + h) + h * 6.28) * 0.5 + 0.5;
+                    float star = smoothstep(0.45, 0.0, length(fpos - 0.5));
+                    vec3 starColor = vec3(0.8, 0.9, 1.0);
+                    if(h > 0.995) starColor = vec3(1.0, 0.9, 0.7);
+                    color += star * starColor * twinkle * (0.5 + h * 0.5);
+                }
+            }
+            
+            float glow = length(uv - 0.5);
+            color += vec3(0.05, 0.03, 0.15) * (1.0 - smoothstep(0.0, 0.8, glow)) * 0.4;
+            
+            gl_FragColor = vec4(color, 1.0);
+        }
+    `;
+
+    function createShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        return shader;
+    }
+
+    const program = gl.createProgram();
+    gl.attachShader(program, createShader(gl, gl.VERTEX_SHADER, vsSource));
+    gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, fsSource));
+    gl.linkProgram(program);
+
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
+
+    const positionLocation = gl.getAttribLocation(program, "a_position");
+    const timeLocation = gl.getUniformLocation(program, "u_time");
+    const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+
+    function renderStarfield(time) {
+        if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+
+        gl.useProgram(program);
+        gl.enableVertexAttribArray(positionLocation);
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+        gl.uniform1f(timeLocation, time * 0.001);
+        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        requestAnimationFrame(renderStarfield);
+    }
+    requestAnimationFrame(renderStarfield);
+
+
+    // --- Three.js Interactive Scene Implementation ---
+    (function initThreeScene() {
+        const container = document.getElementById('three-container');
+        const scene = new THREE.Scene();
+        const width = container.clientWidth || window.innerWidth;
+        const height = container.clientHeight || 400;
+        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        // Core node
+        const coreGeo = new THREE.SphereGeometry(0.5, 32, 32);
+        const coreMat = new THREE.MeshPhongMaterial({ 
+            color: 0x2e5bff, 
+            emissive: 0x1a2e7a,
+            shininess: 100 
+        });
+        const core = new THREE.Mesh(coreGeo, coreMat);
+        scene.add(core);
+
+        // Orbital nodes
+        const orbitGroup = new THREE.Group();
+        scene.add(orbitGroup);
+
+        const nodes = [
+            { color: 0x00f2ff, distance: 2.5, size: 0.2, speed: 0.5 }, // Pulse
+            { color: 0xff3d00, distance: 3.5, size: 0.25, speed: 0.3 }, // Incidents
+            { color: 0xbcff00, distance: 4.5, size: 0.3, speed: 0.2 }, // Revenue
+            { color: 0xffffff, distance: 5.5, size: 0.15, speed: 0.4 }  // Active
+        ];
+
+        const orbitalMeshes = nodes.map(node => {
+            const geo = new THREE.SphereGeometry(node.size, 16, 16);
+            const mat = new THREE.MeshPhongMaterial({ color: node.color, emissive: node.color, emissiveIntensity: 0.5 });
+            const mesh = new THREE.Mesh(geo, mat);
+            
+            // Add orbital ring
+            const ringGeo = new THREE.TorusGeometry(node.distance, 0.01, 2, 64);
+            const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 });
+            const ring = new THREE.Mesh(ringGeo, ringMat);
+            ring.rotation.x = Math.PI / 2;
+            scene.add(ring);
+            
+            orbitGroup.add(mesh);
+            return { mesh, ...node, angle: Math.random() * Math.PI * 2 };
+        });
+
+        const light = new THREE.PointLight(0xffffff, 1.5, 100);
+        light.position.set(5, 5, 5);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0x404040));
+
+        camera.position.z = 8;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = Date.now() * 0.001;
+            
+            core.rotation.y += 0.01;
+            core.scale.setScalar(1 + Math.sin(time * 2) * 0.05);
+            
+            orbitalMeshes.forEach(node => {
+                node.angle += node.speed * 0.01;
+                node.mesh.position.x = Math.cos(node.angle) * node.distance;
+                node.mesh.position.z = Math.sin(node.angle) * node.distance;
+                node.mesh.rotation.y += 0.02;
+            });
+            
+            orbitGroup.rotation.x = Math.sin(time * 0.2) * 0.2;
+            
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            const w = container.clientWidth || window.innerWidth;
+            const h = container.clientHeight || 400;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+        });
+
+        animate();
+    })();
+</script>
+</body></html>
