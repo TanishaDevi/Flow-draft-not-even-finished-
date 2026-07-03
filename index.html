@@ -770,3 +770,352 @@
     <a href="payment.html">Payment</a>
   </div>
 </nav>
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Constellation Reports - FLOW</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Serif:wght@600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..900&amp;family=Noto+Serif:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(10, 10, 31, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(208, 188, 255, 0.3), transparent);
+        }
+        .orbital-glow {
+            box-shadow: 0 0 30px 5px rgba(208, 188, 255, 0.15);
+        }
+        .constellation-line {
+            stroke: rgba(208, 188, 255, 0.2);
+            stroke-width: 1;
+            stroke-dasharray: 4 2;
+        }
+        .node-pulse {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .starlight-dust {
+            background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+            opacity: 0.05;
+            pointer-events: none;
+        }
+        .planetary-scroll::-webkit-scrollbar { display: none; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "tertiary-fixed-dim": "#eec200",
+                "surface-bright": "#333a40",
+                "tertiary-container": "#cea700",
+                "error": "#ffb4ab",
+                "on-background": "#dde3eb",
+                "on-secondary": "#003731",
+                "surface-container": "#1a2026",
+                "inverse-primary": "#6d3bd7",
+                "primary-container": "#a078ff",
+                "surface-container-highest": "#2f353c",
+                "surface-container-high": "#242b31",
+                "surface": "#0e141a",
+                "surface-container-low": "#161c22",
+                "on-secondary-fixed": "#00201c",
+                "on-tertiary": "#3c2f00",
+                "inverse-on-surface": "#2b3137",
+                "inverse-surface": "#dde3eb",
+                "on-surface-variant": "#cbc3d7",
+                "primary-fixed-dim": "#d0bcff",
+                "on-surface": "#dde3eb",
+                "on-tertiary-fixed-variant": "#574500",
+                "on-secondary-fixed-variant": "#005047",
+                "secondary-fixed": "#62fae3",
+                "primary": "#d0bcff",
+                "surface-container-lowest": "#080f14",
+                "outline": "#958ea0",
+                "on-primary-fixed-variant": "#5516be",
+                "on-error-container": "#ffdad6",
+                "surface-variant": "#2f353c",
+                "tertiary-fixed": "#ffe083",
+                "on-error": "#690005",
+                "on-tertiary-container": "#4e3e00",
+                "secondary-fixed-dim": "#3cddc7",
+                "tertiary": "#eec200",
+                "on-secondary-container": "#004d44",
+                "outline-variant": "#494454",
+                "secondary-container": "#03c6b2",
+                "surface-dim": "#0e141a",
+                "on-primary": "#3c0091",
+                "surface-tint": "#d0bcff",
+                "on-primary-container": "#340080",
+                "on-tertiary-fixed": "#231b00",
+                "primary-fixed": "#e9ddff",
+                "on-primary-fixed": "#23005c",
+                "background": "#0e141a",
+                "error-container": "#93000a",
+                "secondary": "#44e2cd",
+                "cobalt-electric": "#2E5BFF",
+                "bio-lime": "#D6F34C",
+                "obsidian": "#050505"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+              },
+              "fontFamily": {
+                "headline-lg-mobile": ["Noto Serif"],
+                "display-lg": ["Noto Serif"],
+                "body-md": ["JetBrains Mono"],
+                "label-sm": ["JetBrains Mono"]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary/30 min-h-screen overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/40 dark:bg-obsidian/60 backdrop-blur-xl border-b border-white/5 flex justify-between items-center px-4 py-4 border-bio-lime/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-cobalt-electric dark:text-bio-lime">hub</span>
+<h1 class="font-display-lg text-headline-lg-mobile tracking-widest text-cobalt-electric dark:text-bio-lime drop-shadow-[0_0_8px_rgba(46,91,255,0.8)]">FLOW</h1>
+</div>
+<div class="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A stylized portrait of a futuristic system commander with bioluminescent circuit patterns on their skin. The background is a dark, deep-space cockpit with glowing control panels in electric blue and lime green. The overall aesthetic is high-tech, cinematic, and sleek, with a soft atmospheric blur to focus on the high-fidelity detail of the character's facial features and the neon glow reflecting in their eyes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv0tPOp5YMnGkFfiK2DXvsqfx-xQDbUWgSk7gRuEQZlygKutvrkiMFORAz0MmZaIyIulp4Sa5LRfrEhoHo_5At4LU2oZ3lWOacN9IzoagWADs5V9DqP2OIlHI9d1bVUZBDgXCoFs-4Etjxon9v7ZhFeYDaMZZ2Cb-7qiZwWresEH24-bnK-7PtI05r2-qyYIpSiazM8cDIH4Wt_JSI0NnRVOW8schyIOk4ACOFRK_7QYRLfyv_3e3lmRUh6VOlI7KEcBAbTwzjYgTT"/>
+</div>
+</header>
+<main class="pt-24 pb-32 px-4 space-y-8 relative">
+<div class="absolute inset-0 z-0 overflow-hidden pointer-events-none"><div class="absolute inset-0 bg-[#050505]"></div><div class="absolute inset-0 opacity-30 animate-pulse" style="background-image: radial-gradient(white 1px, transparent 0); background-size: 40px 40px;"></div><div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(white 1px, transparent 0); background-size: 100px 100px; background-position: 20px 20px;"></div><div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-cobalt-electric/5 to-transparent"></div></div>
+<!-- Sector Selector (Planetary Navigation) -->
+<section class="relative z-10 space-y-4">
+<div class="flex justify-between items-end px-2">
+<h2 class="font-headline-lg-mobile text-on-surface">Sector Selector</h2>
+<span class="text-label-sm text-outline uppercase tracking-tighter">Current: Orion Hub</span>
+</div>
+<div class="flex gap-6 overflow-x-auto pb-4 planetary-scroll snap-x">
+<button class="flex-none flex flex-col items-center gap-2 snap-center group">
+<div class="w-16 h-16 rounded-full glass-panel flex items-center justify-center border-bio-lime/50 ring-2 ring-bio-lime/20 shadow-[0_0_20px_rgba(214,243,76,0.3)] group-active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-bio-lime">star</span>
+</div>
+<span class="text-label-sm text-bio-lime">Alpha Site</span>
+</button>
+<button class="flex-none flex flex-col items-center gap-2 snap-center group opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all">
+<div class="w-16 h-16 rounded-full glass-panel flex items-center justify-center group-active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-cobalt-electric">adjust</span>
+</div>
+<span class="text-label-sm">Beta Outlet</span>
+</button>
+<button class="flex-none flex flex-col items-center gap-2 snap-center group opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all">
+<div class="w-16 h-16 rounded-full glass-panel flex items-center justify-center group-active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-secondary">blur_on</span>
+</div>
+<span class="text-label-sm">Gamma Port</span>
+</button>
+<button class="flex-none flex flex-col items-center gap-2 snap-center group opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all">
+<div class="w-16 h-16 rounded-full glass-panel flex items-center justify-center group-active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-tertiary">wb_sunny</span>
+</div>
+<span class="text-label-sm">Solar Bay</span>
+</button>
+</div>
+</section>
+<!-- Main Constellation Visualization -->
+<section class="glass-panel rounded-xl p-4 orbital-glow z-10 backdrop-blur-xl border-white/10 shadow-[0_0_40px_rgba(46,91,255,0.1)]">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-headline-lg-mobile text-primary">Sales Constellation</h3>
+<p class="text-label-sm text-outline">Interconnected Core Transactions</p>
+</div>
+<span class="material-symbols-outlined text-bio-lime text-3xl">auto_graph</span>
+</div>
+<!-- SVG Constellation Data Map -->
+<div class="w-full h-64 relative bg-obsidian/40 rounded-lg overflow-hidden flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 400 300">
+<line class="constellation-line" x1="80" x2="150" y1="220" y2="100"></line>
+<line class="constellation-line" x1="150" x2="250" y1="100" y2="180"></line>
+<line class="constellation-line" x1="250" x2="320" y1="180" y2="80"></line>
+<line class="constellation-line" x1="150" x2="300" y1="100" y2="250"></line>
+<!-- Nodes -->
+<circle class="node-pulse" cx="80" cy="220" fill="#2E5BFF" r="4"></circle>
+<circle class="node-pulse" cx="150" cy="100" fill="#D6F34C" r="6"></circle>
+<circle class="node-pulse" cx="250" cy="180" fill="#2E5BFF" r="4"></circle>
+<circle class="node-pulse" cx="320" cy="80" fill="#D6F34C" r="5"></circle>
+<circle class="node-pulse" cx="300" cy="250" fill="#62fae3" r="3"></circle>
+</svg>
+<!-- Overlay Data Labels -->
+<div class="absolute top-4 right-4 text-right">
+<div class="text-headline-lg-mobile font-bold text-bio-lime">+24.5%</div>
+<div class="text-label-sm text-outline">Momentum</div>
+</div>
+<div class="absolute bottom-4 left-4">
+<div class="text-label-sm text-cobalt-electric font-bold">Node 7G: Optimal</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-6">
+<div class="p-3 bg-surface-container-low rounded-lg border border-white/5">
+<div class="text-outline text-[10px] uppercase">Kitchen Flow</div>
+<div class="text-lg font-bold text-on-surface">14.2m</div>
+<div class="w-full h-1 bg-outline-variant mt-2 rounded-full overflow-hidden">
+<div class="h-full bg-bio-lime w-3/4"></div>
+</div>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg border border-white/5">
+<div class="text-outline text-[10px] uppercase">Turnover</div>
+<div class="text-lg font-bold text-on-surface">92%</div>
+<div class="w-full h-1 bg-outline-variant mt-2 rounded-full overflow-hidden">
+<div class="h-full bg-cobalt-electric w-11/12"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Secondary Specialized Orbitals -->
+<section class="grid grid-cols-1 gap-6 z-10">
+<!-- Waste Nebula -->
+<div class="glass-panel rounded-xl p-4 min-h-[220px] flex flex-col justify-between backdrop-blur-xl border-white/10 shadow-[0_0_30px_rgba(238,194,0,0.1)]">
+<div>
+<div class="flex justify-between items-center">
+<h4 class="text-tertiary font-headline-lg-mobile">Waste Nebula</h4>
+<span class="material-symbols-outlined text-tertiary">bubble_chart</span>
+</div>
+<p class="text-label-sm text-outline mt-1">Dispersion Analysis</p>
+</div>
+<div class="flex-1 flex items-center justify-center py-4">
+<div class="relative w-32 h-32">
+<div class="absolute inset-0 rounded-full border-2 border-dashed border-tertiary/20 animate-[spin_10s_linear_infinite]"></div>
+<div class="absolute inset-4 rounded-full border border-tertiary/40"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="text-center">
+<div class="text-2xl font-bold text-tertiary">4.2k</div>
+<div class="text-[9px] text-outline uppercase">Liters</div>
+</div>
+</div>
+</div>
+</div>
+<div class="text-right text-[10px] text-error">Warning: Core Bleed Detected</div>
+</div>
+<!-- Staff Orbitals -->
+<div class="glass-panel rounded-xl p-4 min-h-[220px] backdrop-blur-xl border-white/10 shadow-[0_0_30px_rgba(68,226,205,0.1)]">
+<div class="flex justify-between items-center mb-4">
+<div>
+<h4 class="text-secondary font-headline-lg-mobile">Staff Orbitals</h4>
+<p class="text-label-sm text-outline">Cohesion &amp; Engagement</p>
+</div>
+<span class="material-symbols-outlined text-secondary">diversity_3</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full border border-secondary p-1">
+<div class="w-full h-full bg-secondary rounded-full"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between text-label-sm mb-1">
+<span>Commander Unit</span>
+<span class="text-secondary">98%</span>
+</div>
+<div class="h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[98%]"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full border border-outline-variant p-1">
+<div class="w-full h-full bg-cobalt-electric rounded-full"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between text-label-sm mb-1">
+<span>Service Drones</span>
+<span class="text-cobalt-electric">74%</span>
+</div>
+<div class="h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-cobalt-electric w-[74%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-around gap-8 bg-obsidian/80 backdrop-blur-2xl border border-bio-lime/20 shadow-[0_0_25px_rgba(214,243,76,0.2)] rounded-full px-8 py-4 min-w-[320px]">
+<a class="text-on-surface-variant/60 hover:scale-110 transition-transform" href="#">
+<span class="material-symbols-outlined">space_dashboard</span>
+</a>
+<a class="text-on-surface-variant/60 hover:scale-110 transition-transform" href="#">
+<span class="material-symbols-outlined">diversity_3</span>
+</a>
+<a class="text-cobalt-electric dark:text-bio-lime scale-125 drop-shadow-[0_0_12px_rgba(214,243,76,0.6)] animate-pulse" href="#">
+<span class="material-symbols-outlined">insights</span>
+</a>
+<a class="text-on-surface-variant/60 hover:scale-110 transition-transform" href="#">
+<span class="material-symbols-outlined">tune</span>
+</a>
+</nav>
+<!-- Background Atmospheric Effect -->
+<div class="fixed top-1/4 -right-20 w-80 h-80 bg-cobalt-electric/10 blur-[100px] -z-10 rounded-full"></div>
+<div class="fixed bottom-1/4 -left-20 w-80 h-80 bg-bio-lime/5 blur-[100px] -z-10 rounded-full"></div>
+<script>
+        // Micro-interactions for nodes
+        document.querySelectorAll('circle').forEach(circle => {
+            circle.addEventListener('touchstart', function() {
+                this.setAttribute('r', '10');
+                this.style.transition = 'r 0.3s ease';
+            });
+            circle.addEventListener('touchend', function() {
+                this.setAttribute('r', this.getAttribute('data-original-r') || '5');
+            });
+        });
+        
+        // Planetary selector active state
+        const buttons = document.querySelectorAll('.planetary-scroll button');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => {
+                    b.classList.add('opacity-50', 'grayscale');
+                    b.querySelector('.glass-panel').classList.remove('border-bio-lime/50', 'ring-2', 'ring-bio-lime/20', 'shadow-[0_0_20px_rgba(214,243,76,0.3)]');
+                    b.querySelector('span:last-child').classList.remove('text-bio-lime');
+                });
+                btn.classList.remove('opacity-50', 'grayscale');
+                btn.querySelector('.glass-panel').classList.add('border-bio-lime/50', 'ring-2', 'ring-bio-lime/20', 'shadow-[0_0_20px_rgba(214,243,76,0.3)]');
+                btn.querySelector('span:last-child').classList.add('text-bio-lime');
+            });
+        });
+    </script>
+</body></html>
+<nav class="navbar">
+  <div class="logo">FLOW 🌌</div>
+
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="analytics.html">Analytics</a>
+    <a href="payment.html">Payment</a>
+  </div>
+</nav>
